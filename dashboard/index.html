@@ -107,13 +107,11 @@
     }
 
     .card-hover:hover {
-
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
 
     .nav-item {
       transition: all 0.2s ease;
-
     }
 
     .nav-item:hover {
@@ -125,7 +123,6 @@
       background: rgba(16, 185, 129, 0.2);
       border-radius: 8px;
       border-left: 4px solid #10b981;
-
     }
 
     .file-upload-area {
@@ -246,7 +243,6 @@
       border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
-
     }
 
     .theme-toggle.active {
@@ -263,13 +259,10 @@
       background: white;
       border-radius: 50%;
       transition: all 0.3s ease;
-
     }
 
     .theme-toggle.active::before {
       transform: translateX(21px);
-
-
     }
 
     .theme-icon {
@@ -355,14 +348,9 @@
       /* For Chrome, Safari, and Opera */
     }
 
-
     body::-webkit-scrollbar {
       display: none;
     }
-
-
-
-
 
     @media screen and (max-width: 767px) {
       .card-bg {
@@ -379,8 +367,6 @@
         margin-top: 20px;
       }
 
-
-
       .botx {
         display: none;
         padding: 0px !important;
@@ -388,8 +374,8 @@
 
       /* Styles for the dot */
       .boty {
-        height: 10px;
-        width: 10px;
+        height: 3px;
+        width: 3px;
         margin-right: 6px;
         margin-top: 6px;
         background-color: #568568;
@@ -397,7 +383,6 @@
         display: inline-block;
         animation: pulse-online 3s infinite cubic-bezier(0.66, 0, 0.34, 0.5);
       }
-
 
       @keyframes pulse-online {
         0% {
@@ -412,37 +397,124 @@
           box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
         }
       }
-
-
     }
-
 
     .hide-scrollbar::-webkit-scrollbar {
       display: none;
+    }
+
+    /* Custom input styles for yield prediction */
+    .custom-select {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-select-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 4px;
+    }
+
+    .custom-select-option {
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-select-option:last-child {
+      border-bottom: none;
+    }
+
+    .custom-select-option:hover {
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+
+    .custom-select-input {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      padding-right: 40px;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .custom-select-arrow {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .custom-select.open .custom-select-arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    /* Responsive chat input fix */
+    .chat-input-container {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .chat-input-container input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chat-input-container button {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+      .chat-input-container {
+        gap: 6px;
+      }
+
+      .chat-input-container button {
+        width: 42px;
+        height: 42px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-
-
-
-
-  <!-- Fixed Mobile Header -->
+  <!-- =============================================== -->
+  <!-- FIXED MOBILE HEADER SECTION START -->
+  <!-- =============================================== -->
 
   <div class="lg:hidden fixed-header header-bg border-b border-primary shadow-sm ">
     <div class="flex justify-between items-center p-4">
       <div class="flex items-center">
 
         <!-- Mobile Menu Button -->
-
         <button id="mobile-menu-btn" class="bg-green-600 text-white p-2 rounded-lg shadow-lg mr-4 z-50">
           <i class="fas fa-bars"></i>
         </button>
 
         <!-- Page Title and Subtitle -->
-
         <div>
           <h2 id="mobile-page-title" class="text-lg font-bold text-primary">Dashboard</h2>
           <p class="text-xs text-secondary md:hidden">Track Extensively</p>
@@ -452,16 +524,13 @@
 
       </div>
 
-
       <div class="flex items-center space-x-5">
-
 
         <!-- Theme Toggle -->
         <div class="theme-toggle" id="theme-toggle">
           <i class="fas fa-moon theme-icon moon-icon"></i>
           <i class="fas fa-sun theme-icon sun-icon"></i>
         </div>
-
 
         <!-- Notifications -->
         <div class="relative">
@@ -470,7 +539,6 @@
           <span
             class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
         </div>
-
 
         <!-- User Profile -->
         <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
@@ -481,16 +549,14 @@
     </div>
   </div>
 
-  <!-- End Fixed Mobile Header -->
+  <!-- =============================================== -->
+  <!-- FIXED MOBILE HEADER SECTION END -->
+  <!-- =============================================== -->
 
+  <!-- =============================================== -->
+  <!-- SIDEBAR SECTION START -->
+  <!-- =============================================== -->
 
-
-
-
-
-
-
-  <!-- Sidebar -->
   <div id="sidebar"
     class="fixed left-0 top-0 h-full w-64 sidebar-bg shadow-xl z-40 transform -translate-x-full lg:translate-x-0 sidebar-transition border-r border-primary">
 
@@ -554,23 +620,18 @@
               <span>Farm Records</span>
             </a>
           </li>
-
           <li>
             <a href="#" class="nav-item flex items-center p-3 text-secondary hover:text-green-600" data-page="ai-chat">
               <i class="fas fa-comments mr-3 w-5"></i>
               <span>AI Chat Support</span>
             </a>
           </li>
-
           <li>
             <div style="height: 120px;"></div>
           </li>
-
         </ul>
       </nav>
     </div>
-
-
 
     <!-- Sidebar Profile -->
     <div class="sidebar-profile p-4 border-t border-primary sidebar-bg">
@@ -591,19 +652,19 @@
       </div>
     </div>
 
-
   </div>
 
-
-
-
-
+  <!-- =============================================== -->
+  <!-- SIDEBAR SECTION END -->
+  <!-- =============================================== -->
 
   <!-- Main Content -->
   <div class="lg:ml-64 main-content">
 
+    <!-- =============================================== -->
+    <!-- DESKTOP HEADER SECTION START -->
+    <!-- =============================================== -->
 
-    <!-- Desktop Header -->
     <header class="hidden lg:block header-bg shadow-sm border-b border-primary p-5">
       <div class="flex justify-between items-center">
 
@@ -611,7 +672,6 @@
           <h2 id="page-title" class="text-2xl font-bold text-primary">Dashboard</h2>
           <p id="page-subtitle" class="text-secondary mt-1">Welcome back to your smart farming assistant</p>
         </div>
-
 
         <div class="flex items-center space-x-5">
 
@@ -630,17 +690,21 @@
       </div>
     </header>
 
-
+    <!-- =============================================== -->
+    <!-- DESKTOP HEADER SECTION END -->
+    <!-- =============================================== -->
 
     <!-- Page Content One : DASHBOARD -->
     <main class="p-6 mobile-header-spacing lg:pt-6">
 
-      <!-- Dashboard Page -->
+      <!-- =============================================== -->
+      <!-- DASHBOARD PAGE START -->
+      <!-- =============================================== -->
+
       <div id="dashboard-page" class="page-content page-fade active lg:-mt-16 mt-6">
         <!-- Stats Cards -->
         <div class="content-section">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
 
             <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary w-full ">
               <div class="flex items-center">
@@ -648,16 +712,11 @@
                   <i class="fas fa-leaf text-green-600 text-xl"></i>
                 </div>
                 <div>
-
                   <p class="text-2xl font-bold text-primary">98.2 %</p>
                   <p class="text-sm text-secondary">Healthy Plants</p>
-
                 </div>
               </div>
             </div>
-
-
-
 
             <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary">
               <div class="flex items-center">
@@ -667,7 +726,6 @@
                 <div>
                   <p class="text-2xl font-bold text-primary">2.3 tonnes</p>
                   <p class="text-sm text-secondary">Expected Yield</p>
-
                 </div>
               </div>
             </div>
@@ -678,10 +736,8 @@
                   <i class="fas fa-coins text-yellow-600 text-xl"></i>
                 </div>
                 <div>
-
                   <p class="text-2xl font-bold text-primary">Ksh 350 / kg</p>
                   <p class="text-sm text-secondary">Cabbage Price</p>
-
                 </div>
               </div>
             </div>
@@ -694,7 +750,6 @@
                 <div>
                   <p class="text-2xl font-bold text-primary">Ksh 150 / kg</p>
                   <p class="text-sm text-secondary">Kale Price</p>
-
                 </div>
               </div>
             </div>
@@ -771,17 +826,14 @@
         </div>
       </div>
 
-      <!---- END OF MAIN DASHBOARD CONTENT ------>
+      <!-- =============================================== -->
+      <!-- DASHBOARD PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- DISEASE DETECTION PAGE START -->
+      <!-- =============================================== -->
 
-
-
-
-
-
-
-
-      <!--- DISEASE DETECTION PAGE -->
       <div id="disease-detection-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-6">
@@ -858,19 +910,17 @@
         </div>
       </div>
 
-      <!--- END OF DISEASE AND PEST DETECTION PAGE -->
+      <!-- =============================================== -->
+      <!-- DISEASE DETECTION PAGE END -->
+      <!-- =============================================== -->
 
-
-
-
-
-
-      <!--- WEATHER ADVICE PAGE -->
+      <!-- =============================================== -->
+      <!-- WEATHER ADVICE PAGE START -->
+      <!-- =============================================== -->
 
       <div id="weather-advice-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
-
 
             <!-- Current Weather -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
@@ -978,11 +1028,14 @@
         </div>
       </div>
 
-      <!---- END OF WEATHER PAGE ------>
+      <!-- =============================================== -->
+      <!-- WEATHER ADVICE PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- GROWTH TRACKING PAGE START -->
+      <!-- =============================================== -->
 
-
-      <!--- GROWTH TRACKING PAGE -->
       <div id="growth-tracking-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-4 ">
@@ -1085,15 +1138,14 @@
         </div>
       </div>
 
-      <!--- END OF GROWTH PAGE ----->
+      <!-- =============================================== -->
+      <!-- GROWTH TRACKING PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- MARKET PRICES PAGE START -->
+      <!-- =============================================== -->
 
-
-
-
-
-
-      <!--- MARKET PRICES PAGE -->
       <div id="market-prices-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
@@ -1163,7 +1215,6 @@
           </div>
         </div>
 
-
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Price Trends (Last 30 Days)</h3>
@@ -1206,16 +1257,15 @@
           </div>
         </div>
       </div>
-      <!--- END OF MARKET PRICES PAGE ----->
 
+      <!-- =============================================== -->
+      <!-- MARKET PRICES PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- YIELD PREDICTION PAGE START -->
+      <!-- =============================================== -->
 
-
-
-
-
-
-      <!--- YIELD PREDICTION PAGE -->
       <div id="yield-prediction-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-4">
@@ -1225,12 +1275,17 @@
               <form class="space-y-4">
                 <div>
                   <label class="block text-sm font-medium text-primary mb-2">Crop Type</label>
-                  <select
-                    class="w-full p-3 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-primary text-primary">
-                    <option>Cabbage</option>
-                    <option>Kale</option>
-                    <option>Both</option>
-                  </select>
+                  <div class="custom-select" data-field="cropType">
+                    <div class="custom-select-input">
+                      <span class="custom-select-value text-primary">Select Crop Type</span>
+                      <i class="fas fa-chevron-down custom-select-arrow"></i>
+                    </div>
+                    <div class="custom-select-dropdown hidden">
+                      <div class="custom-select-option text-primary" data-value="cabbage">Cabbage</div>
+                      <div class="custom-select-option text-primary" data-value="kale">Kale</div>
+                      <div class="custom-select-option text-primary" data-value="both">Both</div>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-primary mb-2">Farm Area (hectares)</label>
@@ -1244,22 +1299,32 @@
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-primary mb-2">Variety</label>
-                  <select
-                    class="w-full p-3 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-primary text-primary">
-                    <option>Standard Variety</option>
-                    <option>High-Yield Hybrid</option>
-                    <option>Organic Variety</option>
-                  </select>
+                  <div class="custom-select" data-field="variety">
+                    <div class="custom-select-input">
+                      <span class="custom-select-value text-primary">Select Variety</span>
+                      <i class="fas fa-chevron-down custom-select-arrow"></i>
+                    </div>
+                    <div class="custom-select-dropdown hidden">
+                      <div class="custom-select-option text-primary" data-value="standard">Standard Variety</div>
+                      <div class="custom-select-option text-primary" data-value="hybrid">High-Yield Hybrid</div>
+                      <div class="custom-select-option text-primary" data-value="organic">Organic Variety</div>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-primary mb-2">Growing Conditions</label>
-                  <select
-                    class="w-full p-3 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-primary text-primary">
-                    <option>Optimal</option>
-                    <option>Good</option>
-                    <option>Average</option>
-                    <option>Poor</option>
-                  </select>
+                  <div class="custom-select" data-field="conditions">
+                    <div class="custom-select-input">
+                      <span class="custom-select-value text-primary">Select Conditions</span>
+                      <i class="fas fa-chevron-down custom-select-arrow"></i>
+                    </div>
+                    <div class="custom-select-dropdown hidden">
+                      <div class="custom-select-option text-primary" data-value="optimal">Optimal</div>
+                      <div class="custom-select-option text-primary" data-value="good">Good</div>
+                      <div class="custom-select-option text-primary" data-value="average">Average</div>
+                      <div class="custom-select-option text-primary" data-value="poor">Poor</div>
+                    </div>
+                  </div>
                 </div>
                 <button type="button"
                   class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-semibold"
@@ -1304,8 +1369,6 @@
                 <p class="text-xs text-secondary">per cabbage head</p>
               </div>
 
-
-
               <!-- CARD THREE -->
               <div class="text-center p-4 bg-purple-51 rounded-lg">
                 <i class="fas fa-coins text-purple-600 text-2xl mb-2"></i>
@@ -1319,13 +1382,14 @@
         </div>
       </div>
 
-      <!--- END OF YIELD ANALYSIS PAGE ----->
+      <!-- =============================================== -->
+      <!-- YIELD PREDICTION PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- FARM RECORDS PAGE START -->
+      <!-- =============================================== -->
 
-
-
-
-      <!---- FARM RECORDS PAGE ---->
       <div id="farm-records-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
@@ -1463,12 +1527,14 @@
         </div>
       </div>
 
-      <!---- END OF FARM RECORDS PAGE-->
+      <!-- =============================================== -->
+      <!-- FARM RECORDS PAGE END -->
+      <!-- =============================================== -->
 
+      <!-- =============================================== -->
+      <!-- AI CHAT SUPPORT PAGE START -->
+      <!-- =============================================== -->
 
-
-
-      <!------  AI CHAT PAGE -->
       <div id="ai-chat-page" class="page-content page-fade hidden">
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm border border-primary lg:-mt-16 mt-5"
@@ -1493,7 +1559,7 @@
                   <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3 mt-1 boty">
                     <i class="fas fa-robot botx text-white text-xs"></i>
                   </div>
-                  <div class="bg-secondary rounded-lg p-0 max-w-xs">
+                  <div class="bg-secondary rounded-lg p-3 max-w-xs">
                     <p class="text-sm text-primary">Hello! I'm your Shamba AI assistant. I can help you with cabbage and
                       kale farming questions. What would you like to know?</p>
                   </div>
@@ -1519,14 +1585,14 @@
                 </button>
               </div>
 
-              <!-- Chat Input -->
-              <div class="flex space-x-2">
+              <!-- Chat Input - Fixed Responsive Layout -->
+              <div class="chat-input-container">
                 <input type="text" id="chat-input" placeholder="Ask me anything about cabbage and kale farming..."
-                  class="flex-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-primary text-primary">
-                <button id="voice-btn" class="bg-secondary text-secondary p-3 rounded-lg hover:bg-gray-300">
+                  class="p-3 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-primary text-primary">
+                <button id="voice-btn" class="bg-secondary text-secondary rounded-lg hover:bg-gray-300">
                   <i class="fas fa-microphone"></i>
                 </button>
-                <button id="send-btn" class="bg-green-600 text-white p-3 rounded-lg hover:bg-green-700">
+                <button id="send-btn" class="bg-green-600 text-white rounded-lg hover:bg-green-700">
                   <i class="fas fa-paper-plane"></i>
                 </button>
               </div>
@@ -1534,6 +1600,11 @@
           </div>
         </div>
       </div>
+
+      <!-- =============================================== -->
+      <!-- AI CHAT SUPPORT PAGE END -->
+      <!-- =============================================== -->
+
     </main>
   </div>
 
@@ -1541,7 +1612,10 @@
   <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden"></div>
 
   <script>
-    // Theme management
+    // ===============================================
+    // THEME MANAGEMENT SECTION START
+    // ===============================================
+
     const themeToggle = document.getElementById('theme-toggle');
     const desktopThemeToggle = document.getElementById('desktop-theme-toggle');
     const body = document.body;
@@ -1568,7 +1642,14 @@
     themeToggle.addEventListener('click', toggleTheme);
     desktopThemeToggle.addEventListener('click', toggleTheme);
 
-    // Navigation functionality
+    // ===============================================
+    // THEME MANAGEMENT SECTION END
+    // ===============================================
+
+    // ===============================================
+    // NAVIGATION AND PAGE MANAGEMENT SECTION START
+    // ===============================================
+
     const navItems = document.querySelectorAll('.nav-item');
     const pageContents = document.querySelectorAll('.page-content');
     const pageTitle = document.getElementById('page-title');
@@ -1626,53 +1707,75 @@
       overlay.classList.add('hidden');
     });
 
-    // Navigation handler
+    // Navigation handler with local storage
     navItems.forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const targetPage = item.dataset.page;
-
-        // Update active nav item
-        navItems.forEach(nav => nav.classList.remove('active'));
-        item.classList.add('active');
-
-        // Hide all pages
-        pageContents.forEach(page => {
-          page.classList.add('hidden');
-          page.classList.remove('active');
-        });
-
-        // Show target page
-        const targetPageElement = document.getElementById(targetPage + '-page');
-        if (targetPageElement) {
-          targetPageElement.classList.remove('hidden');
-          setTimeout(() => {
-            targetPageElement.classList.add('active');
-          }, 50);
-        }
-
-        // Update page title and subtitle
-        if (pageInfo[targetPage]) {
-          if (pageTitle) {
-            pageTitle.textContent = pageInfo[targetPage].title;
-            pageSubtitle.textContent = pageInfo[targetPage].subtitle;
-          }
-          if (mobilePageTitle) {
-            mobilePageTitle.textContent = pageInfo[targetPage].title;
-            mobilePageSubtitle.textContent = pageInfo[targetPage].subtitle;
-          }
-        }
-
-        // Close mobile menu
-        sidebar.classList.add('-translate-x-full');
-        overlay.classList.add('hidden');
-
-        // Initialize page-specific functionality
-        initializePage(targetPage);
+        navigateToPage(targetPage);
       });
     });
 
-    // Initialize page-specific functionality
+    function navigateToPage(targetPage) {
+      // Update active nav item
+      navItems.forEach(nav => nav.classList.remove('active'));
+      const activeNavItem = document.querySelector(`[data-page="${targetPage}"]`);
+      if (activeNavItem) {
+        activeNavItem.classList.add('active');
+      }
+
+      // Hide all pages
+      pageContents.forEach(page => {
+        page.classList.add('hidden');
+        page.classList.remove('active');
+      });
+
+      // Show target page
+      const targetPageElement = document.getElementById(targetPage + '-page');
+      if (targetPageElement) {
+        targetPageElement.classList.remove('hidden');
+        setTimeout(() => {
+          targetPageElement.classList.add('active');
+        }, 50);
+      }
+
+      // Update page title and subtitle
+      if (pageInfo[targetPage]) {
+        if (pageTitle) {
+          pageTitle.textContent = pageInfo[targetPage].title;
+          pageSubtitle.textContent = pageInfo[targetPage].subtitle;
+        }
+        if (mobilePageTitle) {
+          mobilePageTitle.textContent = pageInfo[targetPage].title;
+          mobilePageSubtitle.textContent = pageInfo[targetPage].subtitle;
+        }
+      }
+
+      // Close mobile menu
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+
+      // Save current page to localStorage
+      localStorage.setItem('currentPage', targetPage);
+
+      // Initialize page-specific functionality
+      initializePage(targetPage);
+    }
+
+    // Load saved page on refresh
+    function loadSavedPage() {
+      const savedPage = localStorage.getItem('currentPage') || 'dashboard';
+      navigateToPage(savedPage);
+    }
+
+    // ===============================================
+    // NAVIGATION AND PAGE MANAGEMENT SECTION END
+    // ===============================================
+
+    // ===============================================
+    // PAGE INITIALIZATION SECTION START
+    // ===============================================
+
     function initializePage(page) {
       switch (page) {
         case 'growth-tracking':
@@ -1684,10 +1787,20 @@
         case 'farm-records':
           initializeFinancialChart();
           break;
+        case 'yield-prediction':
+          initializeCustomSelects();
+          break;
       }
     }
 
-    // Disease Detection functionality
+    // ===============================================
+    // PAGE INITIALIZATION SECTION END
+    // ===============================================
+
+    // ===============================================
+    // DISEASE DETECTION FUNCTIONALITY SECTION START
+    // ===============================================
+
     const fileUploadArea = document.getElementById('file-upload-area');
     const photoUpload = document.getElementById('photo-upload');
     const photoPreview = document.getElementById('photo-preview');
@@ -1756,7 +1869,61 @@
       }
     }
 
-    // Yield Prediction Calculator
+    // ===============================================
+    // DISEASE DETECTION FUNCTIONALITY SECTION END
+    // ===============================================
+
+    // ===============================================
+    // YIELD PREDICTION FUNCTIONALITY SECTION START
+    // ===============================================
+
+    function initializeCustomSelects() {
+      const customSelects = document.querySelectorAll('.custom-select');
+
+      customSelects.forEach(select => {
+        const input = select.querySelector('.custom-select-input');
+        const dropdown = select.querySelector('.custom-select-dropdown');
+        const valueSpan = select.querySelector('.custom-select-value');
+        const options = select.querySelectorAll('.custom-select-option');
+
+        input.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Close other dropdowns
+          customSelects.forEach(otherSelect => {
+            if (otherSelect !== select) {
+              otherSelect.classList.remove('open');
+              otherSelect.querySelector('.custom-select-dropdown').classList.add('hidden');
+            }
+          });
+
+          // Toggle current dropdown
+          select.classList.toggle('open');
+          dropdown.classList.toggle('hidden');
+        });
+
+        options.forEach(option => {
+          option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+
+            valueSpan.textContent = text;
+            valueSpan.setAttribute('data-value', value);
+
+            select.classList.remove('open');
+            dropdown.classList.add('hidden');
+          });
+        });
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', () => {
+        customSelects.forEach(select => {
+          select.classList.remove('open');
+          select.querySelector('.custom-select-dropdown').classList.add('hidden');
+        });
+      });
+    }
+
     function calculateYield() {
       const results = document.getElementById('yield-results');
       if (results) {
@@ -1789,7 +1956,14 @@
       }
     }
 
-    // Chat functionality
+    // ===============================================
+    // YIELD PREDICTION FUNCTIONALITY SECTION END
+    // ===============================================
+
+    // ===============================================
+    // AI CHAT FUNCTIONALITY SECTION START
+    // ===============================================
+
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
@@ -1818,7 +1992,7 @@
               <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3 mt-1 boty">
                   <i class="fas fa-robot botx text-white text-xs"></i>
               </div>
-              <div class="bg-secondary rounded-lg p-0 max-w-xs">
+              <div class="bg-secondary rounded-lg p-3 max-w-xs">
                   <p class="text-sm text-primary">${message}</p>
               </div>
           </div>
@@ -1907,7 +2081,14 @@
       });
     }
 
-    // Chart initialization functions
+    // ===============================================
+    // AI CHAT FUNCTIONALITY SECTION END
+    // ===============================================
+
+    // ===============================================
+    // CHART INITIALIZATION SECTION START
+    // ===============================================
+
     function initializeGrowthChart() {
       const ctx = document.getElementById('growth-chart');
       if (ctx && !ctx.chart) {
@@ -2017,10 +2198,22 @@
       }
     }
 
+    // ===============================================
+    // CHART INITIALIZATION SECTION END
+    // ===============================================
+
+    // ===============================================
+    // APPLICATION INITIALIZATION SECTION START
+    // ===============================================
+
     // Initialize dashboard on load
     document.addEventListener('DOMContentLoaded', () => {
-      initializePage('dashboard');
+      loadSavedPage();
     });
+
+    // ===============================================
+    // APPLICATION INITIALIZATION SECTION END
+    // ===============================================
   </script>
 </body>
 
