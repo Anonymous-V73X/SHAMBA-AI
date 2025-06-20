@@ -107,7 +107,7 @@
     }
 
     .card-hover:hover {
-      
+
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
 
@@ -216,6 +216,18 @@
     .sidebar-content {
       height: calc(100vh - 120px);
       overflow-y: auto;
+    }
+
+    .bg-green-51{
+      border: #10b98183 solid 1px;
+    }
+
+    .bg-blue-51{
+      border: #3b82f683 solid 1px;
+    }
+
+    .bg-purple-51{
+      border: #a955f775 solid 1px;
     }
 
     .sidebar-profile {
@@ -349,21 +361,30 @@
     }
 
 
+
+
+
     @media screen and (max-width: 767px) {
       .card-bg {
         translate: -8px 0px;
         width: 104%;
       }
 
-      .baa{
+      .baa {
         padding-top: 70px;
-        text-align: center!important;
+        text-align: center !important;
+      }
+
+      .upaa {
+        margin-top: 20px;
       }
 
 
+    }
 
 
-
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>
@@ -442,7 +463,7 @@
     <div class="p-6 border-b border-primary">
       <div class="flex items-center baa">
         <i class="fas fa-seedling text-green-600 text-2xl mr-3"></i>
-        <h1 class="text-xl font-bold text-primary" >Shamba AI</h1>
+        <h1 class="text-xl font-bold text-primary">Shamba AI</h1>
       </div>
       <p class="text-sm text-secondary mt-1">Smart Farming Assistant</p>
     </div>
@@ -587,9 +608,6 @@
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
 
-
-
-
             <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary w-full ">
               <div class="flex items-center">
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
@@ -599,7 +617,7 @@
 
                   <p class="text-2xl font-bold text-primary">98.2 %</p>
                   <p class="text-sm text-secondary">Healthy Plants</p>
-                 
+
                 </div>
               </div>
             </div>
@@ -615,7 +633,7 @@
                 <div>
                   <p class="text-2xl font-bold text-primary">2.3 tonnes</p>
                   <p class="text-sm text-secondary">Expected Yield</p>
-                 
+
                 </div>
               </div>
             </div>
@@ -629,7 +647,7 @@
 
                   <p class="text-2xl font-bold text-primary">Ksh 350 / kg</p>
                   <p class="text-sm text-secondary">Cabbage Price</p>
-                 
+
                 </div>
               </div>
             </div>
@@ -642,7 +660,7 @@
                 <div>
                   <p class="text-2xl font-bold text-primary">Ksh 150 / kg</p>
                   <p class="text-sm text-secondary">Kale Price</p>
-                 
+
                 </div>
               </div>
             </div>
@@ -725,10 +743,15 @@
 
 
 
-      <!--- Disease Detection Page -->
+
+
+
+
+      <!--- DISEASE DETECTION PAGE -->
       <div id="disease-detection-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-6">
+
             <!-- Upload Section -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <h3 class="text-lg font-semibold text-primary mb-4">Upload Plant Photo</h3>
@@ -766,8 +789,8 @@
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Detection History</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm">
+            <div class="overflow-x-auto hide-scrollbar">
+              <table class="w-full text-sm tub">
                 <thead class="bg-secondary">
                   <tr>
                     <th class="px-4 py-3 text-left text-primary">Date</th>
@@ -801,10 +824,20 @@
         </div>
       </div>
 
-      <!-- Weather Advice Page -->
+      <!--- END OF DISEASE AND PEST DETECTION PAGE -->
+
+
+
+
+
+
+      <!--- WEATHER ADVICE PAGE -->
+
       <div id="weather-advice-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
+
+
             <!-- Current Weather -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <h3 class="text-lg font-semibold text-primary mb-4 text-center">Current Weather</h3>
@@ -869,8 +902,8 @@
         <!-- Weekly Forecast -->
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
-            <h3 class="text-lg font-semibold text-primary mb-4">7-Day Forecast</h3>
-            <div class="grid grid-cols-2 md:grid-cols-7 gap-4">
+            <h3 class="text-lg font-semibold text-primary mb-4 text-center">7-Day Forecast</h3>
+            <div class="grid grid-cols-3 md:grid-cols-7 gap-4">
               <div class="text-center">
                 <p class="text-sm text-secondary mb-2">Today</p>
                 <i class="fas fa-sun text-yellow-500 text-2xl mb-2"></i>
@@ -911,10 +944,14 @@
         </div>
       </div>
 
-      <!-- Growth Tracking Page -->
+      <!---- END OF WEATHER PAGE ------>
+
+      
+      
+      <!--- GROWTH TRACKING PAGE -->
       <div id="growth-tracking-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-4 ">
             <!-- Growth Calendar -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <h3 class="text-lg font-semibold text-primary mb-4">Growth Calendar</h3>
@@ -1014,10 +1051,18 @@
         </div>
       </div>
 
-      <!-- Market Prices Page -->
+      <!--- END OF GROWTH PAGE ----->
+
+
+
+
+
+
+
+      <!--- MARKET PRICES PAGE -->
       <div id="market-prices-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
             <!-- Price Cards -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <div class="flex items-center justify-between mb-4">
@@ -1084,7 +1129,7 @@
           </div>
         </div>
 
-        <!-- Price Chart -->
+        
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Price Trends (Last 30 Days)</h3>
@@ -1127,11 +1172,19 @@
           </div>
         </div>
       </div>
+      <!--- END OF MARKET PRICES PAGE ----->
+      
+      
+      
+      
+      
+      
+    
 
-      <!-- Yield Prediction Page -->
+      <!--- YIELD PREDICTION PAGE -->
       <div id="yield-prediction-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:-mt-16 mt-4">
             <!-- Yield Calculator -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <h3 class="text-lg font-semibold text-primary mb-4">Yield Calculator</h3>
@@ -1197,34 +1250,51 @@
         <div class="content-section">
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Yield Analysis</h3>
+
+            <!-- Analysis Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="text-center p-4 bg-green-50 rounded-lg">
+
+              <!-- CARD ONE -->
+              <div class="text-center p-4 bg-green-51 rounded-lg ">
                 <i class="fas fa-arrow-up text-green-600 text-2xl mb-2"></i>
                 <p class="text-sm text-secondary">Expected Increase</p>
                 <p class="text-2xl font-bold text-green-600">15%</p>
                 <p class="text-xs text-secondary">vs. previous season</p>
               </div>
-              <div class="text-center p-4 bg-blue-50 rounded-lg">
+
+              <!-- CARD TWO -->
+              <div class="text-center p-4 bg-blue-51 rounded-lg">
                 <i class="fas fa-weight-hanging text-blue-600 text-2xl mb-2"></i>
                 <p class="text-sm text-secondary">Avg. Head Weight</p>
                 <p class="text-2xl font-bold text-blue-600">1.2kg</p>
                 <p class="text-xs text-secondary">per cabbage head</p>
               </div>
-              <div class="text-center p-4 bg-purple-50 rounded-lg">
+
+
+
+              <!-- CARD THREE -->
+              <div class="text-center p-4 bg-purple-51 rounded-lg">
                 <i class="fas fa-coins text-purple-600 text-2xl mb-2"></i>
                 <p class="text-sm text-secondary">Revenue Potential</p>
                 <p class="text-2xl font-bold text-purple-600">KES 1,190,000</p>
                 <p class="text-xs text-secondary">estimated total</p>
               </div>
+
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Farm Records Page -->
+      <!--- END OF YIELD ANALYSIS PAGE ----->
+
+
+
+
+
+      <!---- FARM RECORDS PAGE ---->
       <div id="farm-records-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:-mt-16 mt-4">
             <!-- Quick Stats -->
             <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
               <h3 class="text-lg font-semibold text-primary mb-4">This Month</h3>
@@ -1293,7 +1363,7 @@
                 </button>
               </div>
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto hide-scrollbar">
               <table class="w-full text-sm">
                 <thead class="bg-secondary">
                   <tr>
@@ -1359,10 +1429,15 @@
         </div>
       </div>
 
-      <!-- AI Chat Page -->
+      <!---- END OF FARM RECORDS PAGE-->
+
+      
+      
+      
+      <!------  AI CHAT PAGE -->
       <div id="ai-chat-page" class="page-content page-fade hidden">
         <div class="content-section">
-          <div class="card-bg rounded-xl shadow-sm border border-primary"
+          <div class="card-bg rounded-xl shadow-sm border border-primary lg:-mt-16 mt-5"
             style="height: 600px; display: flex; flex-direction: column;">
             <!-- Chat Header -->
             <div class="p-4 border-b border-primary">
@@ -1384,7 +1459,7 @@
                   <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3 mt-1">
                     <i class="fas fa-robot text-white text-xs"></i>
                   </div>
-                  <div class="bg-secondary rounded-lg p-3 max-w-xs">
+                  <div class="bg-secondary rounded-lg p-0 max-w-xs">
                     <p class="text-sm text-primary">Hello! I'm your Shamba AI assistant. I can help you with cabbage and
                       kale farming questions. What would you like to know?</p>
                   </div>
@@ -1477,7 +1552,7 @@
         subtitle: 'Welcome back to your smart farming assistant'
       },
       'disease-detection': {
-        title: 'Disease & Pest Detection',
+        title: 'Pest Detection',
         subtitle: 'AI-powered plant health analysis'
       },
       'weather-advice': {
@@ -1709,7 +1784,7 @@
               <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3 mt-1">
                   <i class="fas fa-robot text-white text-xs"></i>
               </div>
-              <div class="bg-secondary rounded-lg p-3 max-w-xs">
+              <div class="bg-secondary rounded-lg p-0 max-w-xs">
                   <p class="text-sm text-primary">${message}</p>
               </div>
           </div>
