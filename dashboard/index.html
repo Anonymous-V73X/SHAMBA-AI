@@ -339,7 +339,8 @@
     }
 
     .sidebar-content::-webkit-scrollbar {
-      display: none; /* For Chrome, Safari, and Opera */
+      display: none;
+      /* For Chrome, Safari, and Opera */
     }
 
 
@@ -348,15 +349,20 @@
     }
 
 
-    @media screen and (max-width: 767px) { 
-      .card-bg{
+    @media screen and (max-width: 767px) {
+      .card-bg {
         translate: -8px 0px;
         width: 104%;
       }
 
+      #sidebar {
+
+        margin-top: -24px !important;
+      }
+
+
+
     }
-
-
   </style>
 </head>
 
@@ -381,8 +387,10 @@
         <!-- Page Title and Subtitle -->
 
         <div>
-          <h2 id="mobile-page-title" class="text-lg font-bold text-primary">Farm Records</h2>
-          <p id="mobile-page-subtitle" class="text-xs text-secondary">Track expenses, sales, and activities</p>
+          <h2 id="mobile-page-title" class="text-lg font-bold text-primary">Dashboard</h2>
+          <p class="text-xs text-secondary md:hidden">Track Extensively</p>
+          <p class="text-xs text-secondary hidden md:block" id="mobile-page-subtitle">Track expenses, sales, and
+            activities</p>
         </div>
 
       </div>
@@ -497,10 +505,7 @@
           </li>
 
           <li>
-            <a href="#" class="nav-item flex items-center p-3 text-secondary hover:text-green-600" data-page="ai-chat">
-              <i class="fas fa-user-shield mr-3 w-5"></i>
-              <span>ADMIN</span>
-            </a>
+            <div style="height: 24px;"></div>
           </li>
 
         </ul>
@@ -553,7 +558,8 @@
         <div class="flex items-center space-x-5">
 
           <div class="relative" style="margin-top: 6px;">
-            <i class="fas fa-bell text-secondary text-xl cursor-pointer hover:text-green-600" style="transform: rotate(45deg);"></i>
+            <i class="fas fa-bell text-secondary text-xl cursor-pointer hover:text-green-600"
+              style="transform: rotate(45deg);"></i>
             <span
               class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
           </div>
@@ -566,13 +572,13 @@
       </div>
     </header>
 
-   
+
 
     <!-- Page Content One : DASHBOARD -->
     <main class="p-6 mobile-header-spacing lg:pt-6">
 
       <!-- Dashboard Page -->
-      <div id="dashboard-page" class="page-content page-fade active lg:-mt-16 mt-6" >
+      <div id="dashboard-page" class="page-content page-fade active lg:-mt-16 mt-6">
         <!-- Stats Cards -->
         <div class="content-section">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -581,14 +587,14 @@
 
 
 
-            <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary w-full " >
+            <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary w-full ">
               <div class="flex items-center">
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
                   <i class="fas fa-leaf text-green-600 text-xl"></i>
                 </div>
                 <div>
                   <p class="text-sm text-secondary">Healthy Plants</p>
-                  <p class="text-2xl font-bold text-primary">98.2%</p>
+                  <p class="text-2xl font-bold text-primary">98.2 %</p>
                 </div>
               </div>
             </div>
@@ -603,7 +609,7 @@
                 </div>
                 <div>
                   <p class="text-sm text-secondary">Expected Yield</p>
-                  <p class="text-2xl font-bold text-primary">2.3 Tonnes</p>
+                  <p class="text-2xl font-bold text-primary">2.3 tonnes</p>
                 </div>
               </div>
             </div>
@@ -615,19 +621,19 @@
                 </div>
                 <div>
                   <p class="text-sm text-secondary">Cabbage Price</p>
-                  <p class="text-2xl font-bold text-primary">KES 350 / kg</p>
+                  <p class="text-2xl font-bold text-primary">Ksh 350 / kg</p>
                 </div>
               </div>
             </div>
 
             <div class="card-bg rounded-xl shadow-sm p-6 card-hover border border-primary">
               <div class="flex items-center">
-                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
-                  <i class="fas fa-cash-register text-yellow-600 text-xl"></i>
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-cash-register text-red-600 text-xl"></i>
                 </div>
                 <div>
                   <p class="text-sm text-secondary">Kale Price</p>
-                  <p class="text-2xl font-bold text-primary">KES 150 / kg</p>
+                  <p class="text-2xl font-bold text-primary">Ksh 150 / kg</p>
                 </div>
               </div>
             </div>
