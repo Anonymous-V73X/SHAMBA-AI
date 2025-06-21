@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shamba AI - Smart Assistant for Cabbage & Kale Farming</title>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-
     body {
       font-family: 'Outfit', sans-serif;
-
     }
 
     body::-webkit-scrollbar {
@@ -28,18 +26,63 @@
       background: linear-gradient(150deg, #668e7e 0%, #0e5037 100%);
     }
 
-    /* Glassmorphic Navigation */
-    .glassmorphic-nav {
-      background: rgba(255, 255, 255, 0.168);
+    /* Navigation Bar Styles */
+    .navbar {
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      border-bottom-left-radius: 2px;
-      border-bottom-right-radius: 2px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.123);
-      border-left: 1px solid rgba(255, 255, 255, 0.123);
-      border-right: 1px solid rgba(255, 255, 255, 0.123);
+    }
+
+    .navbar.scrolled .nav-link {
+      color: #4b5563 !important;
+    }
+
+    .navbar.scrolled .nav-link:hover {
+      color: #059669 !important;
+    }
+
+    .navbar.scrolled .logo-text {
+      color: #059669 !important;
+    }
+
+    .navbar.scrolled .logo-icon {
+      color: #059669 !important;
+    }
+
+    .navbar.scrolled .mobile-menu-btn {
+      color: #4b5563 !important;
+    }
+
+    /* Navigation at top - blend with hero */
+    .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #86efac;
+    }
+
+    .logo-text {
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    .logo-icon {
+      color: #86efac;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu-btn {
+      color: rgba(255, 255, 255, 0.9);
+      transition: color 0.3s ease;
     }
 
     .feature-card {
@@ -113,43 +156,91 @@
       align-items: center;
       justify-content: center;
     }
+
+    .divy {
+      height: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .divy {
+        display: none;
+      }
+
+      .anon{
+
+        margin-top: 45px;
+      }
+    }
+
+    body::-webkit-tap-highlight-color {
+      display: none;
+    }
+
+    body,
+    html {
+      --webkit-tap-highlight-color: transparent;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .her{
+      margin-top: -75px;
+    }
   </style>
 </head>
 
 <body class="bg-gray-50">
 
-
   <!-- Navigation -->
-  <nav class="glassmorphic-nav fixed w-full top-0 z-50">
+  <nav class="navbar fixed w-full top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
 
         <div class="flex items-center">
-          <i class="fas fa-seedling text-green-600 text-2xl mr-2"></i>
-          <span class="text-xl font-bold text-green-600">Shamba AI</span>
+          <i class="fas fa-seedling logo-icon text-2xl mr-2"></i>
+          <span class="text-xl font-bold logo-text">Shamba AI</span>
         </div>
 
         <div class="hidden md:flex items-center space-x-8">
-          <a href="#features" class="text-gray-600 hover:text-green-600 transition-colors font-medium">Features</a>
-          <a href="#how-it-works" class="text-gray-600 hover:text-green-600 transition-colors font-medium">How It
-            Works</a>
+          <a href="#features" class="nav-link hover:text-green-400 transition-colors font-medium">Features</a>
+          <a href="#how-it-works" class="nav-link hover:text-green-400 transition-colors font-medium">How It Works</a>
           <a href="#contact"
             class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition-colors font-medium">Get
             Started</a>
         </div>
 
-
         <div class="md:hidden flex items-center">
-          <button class="text-gray-300">
+          <button class="mobile-menu-btn" id="mobile-menu-button">
             <i class="fas fa-bars text-xl"></i>
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu md:hidden hidden" id="mobile-menu">
+      <div class="px-4 py-4 space-y-3">
+        <a href="#features" class="block py-2 text-gray-600 hover:text-green-600 font-medium">Features</a>
+        <a href="#how-it-works" class="block py-2 text-gray-600 hover:text-green-600 font-medium">How It Works</a>
+        <a href="#contact" class="block py-2 bg-green-600 text-white px-4 rounded-full text-center font-medium">Get
+          Started</a>
+      </div>
+    </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="gradient-bg min-h-screen flex items-center pt-16 relative" style="margin-top: -60px;">
+  <section class="gradient-bg min-h-screen flex items-center pt-16 relative her">
 
     <!-- Floating background image layer -->
     <div class="background-image">
@@ -171,24 +262,25 @@
             cultivation.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            
+
             <button onclick="window.open('https://youtu.be/_-rKpTMsWR0', '_blank')"
-            class="bg-white hover:bg-gray-100 text-green-600 px-8 py-4 rounded-full text-lg font-semibold transition-all pulse-green">
-              <i class="fas fa-play mr-2" ></i>
+              class="bg-white hover:bg-gray-100 text-green-600 px-8 py-4 rounded-full text-lg font-semibold transition-all pulse-green">
+              <i class="fas fa-play mr-2"></i>
               Watch Video
             </button>
 
-            
             <button onclick="window.location.assign('./auth/')"
               class="border-2 border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 rounded-full text-lg font-semibold transition-all">
               <i class="fas fa-leaf mr-2"></i>
               Get Started
             </button>
 
+          </div>
+        </div>
 
-            <div style="height: 40px;"></div>
+        <div class="divy"></div>
 
-        <div class="animate-float text-overlay">
+        <div class="animate-float text-overlay anon">
           <div
             class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-20">
             <div class="text-center text-white">
@@ -524,15 +616,26 @@
   </footer>
 
   <script>
+    // Navigation bar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+          const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
           });
         }
       });
@@ -558,18 +661,8 @@
     });
 
     // Mobile menu toggle
-    const mobileMenuButton = document.querySelector('.md\\:hidden button');
-    const mobileMenu = document.createElement('div');
-    mobileMenu.className = 'md:hidden bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg shadow-lg absolute top-16 left-0 right-0 z-40 hidden border-t border-white border-opacity-20';
-    mobileMenu.innerHTML = `
-            <div class="px-4 py-4 space-y-3">
-                <a href="#features" class="block py-2 text-gray-600 hover:text-green-600 font-medium">Features</a>
-                <a href="#how-it-works" class="block py-2 text-gray-600 hover:text-green-600 font-medium">How It Works</a>
-                <a href="#contact" class="block py-2 bg-green-600 text-white px-4 rounded-full text-center font-medium">Get Started</a>
-            </div>
-        `;
-
-    document.querySelector('nav').appendChild(mobileMenu);
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
     mobileMenuButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
@@ -580,6 +673,13 @@
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
       });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+      }
     });
   </script>
 </body>
