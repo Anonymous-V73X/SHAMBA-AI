@@ -71,7 +71,7 @@
 
     body {
       background: var(--bg-primary);
-      min-height: 200vh;
+      min-height: 120vh;
       -ms-overflow-style: none;
       scrollbar-width: none;
       overflow-x: hidden;
@@ -212,6 +212,7 @@
       filter: drop-shadow(0 0 20px var(--accent-secondary));
     }
 
+    /* Fixed Success Checkmark Animation */
     .success-checkmark {
       width: 80px;
       height: 80px;
@@ -222,7 +223,9 @@
       stroke-miterlimit: 10;
       margin: 20px auto;
       box-shadow: inset 0px 0px 0px var(--accent-primary);
-      animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+      animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+      opacity: 1;
+      transform: scale(1);
     }
 
     .success-checkmark-circle {
@@ -357,61 +360,94 @@
       transform: translate(-50%, -50%) rotate(0deg);
     }
 
-    /* Enhanced checkbox styles with proper alignment */
+    /* Modern Custom Checkbox Styles - FIXED */
     .custom-checkbox {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       border: 2px solid var(--border-secondary);
-      border-radius: 4px;
+      border-radius: 6px;
       background: var(--bg-tertiary);
       position: relative;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
       margin: 0;
-    }
-
-    .custom-checkbox:checked {
-      background: var(--accent-primary);
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 8px var(--shadow-secondary);
-      transform: scale(1.05);
-    }
-
-    .custom-checkbox:checked::after {
-      content: '✓';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 1;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .custom-checkbox:hover {
       border-color: var(--accent-primary);
       background: var(--bg-secondary);
-      transform: scale(1.02);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px var(--shadow-secondary);
+    }
+
+    .custom-checkbox:focus {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    /* Animated checkmark */
+    .custom-checkbox:checked {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--shadow-secondary);
+      transform: scale(1.05);
+    }
+
+    .custom-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: translate(-50%, -60%) rotate(45deg);
+      animation: checkmark-appear 0.3s ease-in-out;
+    }
+
+    @keyframes checkmark-appear {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -60%) rotate(45deg) scale(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -60%) rotate(45deg) scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -60%) rotate(45deg) scale(1);
+      }
     }
 
     /* Perfect checkbox container alignment */
     .checkbox-container {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 14px;
       width: 100%;
+      margin: 12px 0;
     }
 
     .checkbox-label {
       flex: 1;
-      line-height: 1.4;
+      line-height: 1.5;
       padding-top: 1px;
       color: var(--text-secondary) !important;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     /* Input field with proper icon alignment */
@@ -453,7 +489,7 @@
       padding-right: 48px !important;
     }
 
-    /* Modern Custom Select Dropdown */
+    /* Improved Custom Select Dropdown - FIXED VISIBILITY */
     .custom-select-wrapper {
       position: relative;
       width: 100%;
@@ -511,14 +547,15 @@
       color: var(--text-primary);
     }
 
+    /* FIXED: Improved visibility for dropdown options */
     .custom-select-dropdown {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--glassmorphism-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glassmorphism-border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-secondary);
       border-radius: 12px;
       margin-top: 4px;
       z-index: 100;
@@ -531,6 +568,11 @@
       overflow-y: auto;
     }
 
+    [data-theme="dark"] .custom-select-dropdown {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border-primary);
+    }
+
     .custom-select-dropdown.active {
       opacity: 1;
       visibility: visible;
@@ -538,11 +580,18 @@
     }
 
     .custom-select-option {
-      padding: 12px 16px;
+      padding: 14px 16px;
       color: var(--text-primary);
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      border-bottom: 1px solid var(--border-primary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 500;
+      background: transparent;
+    }
+
+    [data-theme="dark"] .custom-select-option {
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .custom-select-option:last-child {
@@ -550,14 +599,15 @@
     }
 
     .custom-select-option:hover {
-      background: var(--bg-secondary);
-      color: var(--accent-primary);
+      background: var(--accent-primary);
+      color: white;
+      transform: translateX(4px);
     }
 
     .custom-select-option.selected {
-      background: var(--bg-secondary);
-      color: var(--accent-primary);
-      font-weight: 500;
+      background: var(--accent-primary);
+      color: white;
+      font-weight: 600;
     }
 
     /* Brand section responsive layout with improved mobile centering */
@@ -632,8 +682,6 @@
       color: var(--text-primary) !important;
     }
 
-    
-
     /* Text colors for theme switching */
     .text-primary-themed {
       color: var(--text-primary) !important;
@@ -682,6 +730,29 @@
       border: 1px solid rgba(148, 163, 184, 0.15);
     }
 
+    /* Error message styling */
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--accent-primary);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
     /* Mobile responsiveness for theme toggle */
     @media (max-width: 768px) {
       .theme-toggle {
@@ -719,6 +790,23 @@
         text-align: center !important;
         display: block;
         margin: 0 auto;
+      }
+    }
+
+    /* Success Animation Fix */
+    .success-screen {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
@@ -853,7 +941,7 @@
       <div class="slide-in-right">
         <div class="glassmorphism rounded-3xl p-8 max-w-md mx-auto">
           <!-- Success Message (Hidden by default) -->
-          <div id="success-message" class="text-center hidden">
+          <div id="success-message" class="text-center hidden success-screen">
             <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
               <circle class="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
               <path class="success-checkmark-check" fill="none" d="m14.1 27.2l7.1 7.2 16.7-16.8" />
@@ -877,6 +965,10 @@
           <!-- Login Form -->
           <div id="login-form" class="form-transition">
             <h2 class="text-3xl font-bold text-primary-themed mb-6 text-center">Welcome Back</h2>
+
+            <!-- Error/Success Messages -->
+            <div id="login-error" class="error-message"></div>
+            <div id="login-success" class="success-message"></div>
 
             <form id="loginForm" class="space-y-6">
               <div class="input-group">
@@ -912,6 +1004,10 @@
           <!-- Register Form -->
           <div id="register-form" class="form-transition hidden">
             <h2 class="text-3xl font-bold text-primary-themed mb-6 text-center">Join Shamba AI</h2>
+
+            <!-- Error/Success Messages -->
+            <div id="register-error" class="error-message"></div>
+            <div id="register-success" class="success-message"></div>
 
             <form id="registerForm" class="space-y-4">
               <div class="grid grid-cols-2 gap-4">
@@ -994,6 +1090,98 @@
   </div>
 
   <script>
+    // Users Database Management (Simulating users.json)
+    class UsersDatabase {
+      constructor() {
+        this.storageKey = 'shambaAI_users_database';
+        this.init();
+      }
+
+      init() {
+        // Initialize users database if it doesn't exist
+        if (!localStorage.getItem(this.storageKey)) {
+          const defaultUsers = {
+            users: [],
+            lastUserId: 0,
+            metadata: {
+              created: new Date().toISOString(),
+              version: "1.0.0",
+              description: "Shamba AI Users Database"
+            }
+          };
+          localStorage.setItem(this.storageKey, JSON.stringify(defaultUsers));
+        }
+      }
+
+      getDatabase() {
+        return JSON.parse(localStorage.getItem(this.storageKey) || '{"users":[],"lastUserId":0}');
+      }
+
+      saveDatabase(database) {
+        database.metadata = {
+          ...database.metadata,
+          lastModified: new Date().toISOString()
+        };
+        localStorage.setItem(this.storageKey, JSON.stringify(database));
+      }
+
+      addUser(userData) {
+        const database = this.getDatabase();
+        const newUser = {
+          id: ++database.lastUserId,
+          ...userData,
+          registeredAt: new Date().toISOString(),
+          lastLogin: null,
+          isActive: true,
+          profile: {
+            avatar: null,
+            preferences: {
+              theme: 'light',
+              notifications: true,
+              language: 'en'
+            }
+          }
+        };
+
+        database.users.push(newUser);
+        this.saveDatabase(database);
+        return newUser;
+      }
+
+      findUserByEmail(email) {
+        const database = this.getDatabase();
+        return database.users.find(user => user.email.toLowerCase() === email.toLowerCase());
+      }
+
+      updateUserLogin(userId) {
+        const database = this.getDatabase();
+        const userIndex = database.users.findIndex(user => user.id === userId);
+        if (userIndex !== -1) {
+          database.users[userIndex].lastLogin = new Date().toISOString();
+          this.saveDatabase(database);
+        }
+      }
+
+      validatePassword(user, password) {
+        // In a real application, you would hash and compare passwords
+        // For this demo, we're storing passwords in plain text (NOT recommended for production)
+        return user.password === password;
+      }
+
+      getAllUsers() {
+        const database = this.getDatabase();
+        return database.users;
+      }
+
+      exportUsersJson() {
+        const database = this.getDatabase();
+        return JSON.stringify(database, null, 2);
+      }
+    }
+
+    // Initialize the users database
+    const usersDB = new UsersDatabase();
+
     // Theme Toggle Functionality
     const themeToggle = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
@@ -1029,6 +1217,7 @@
       registerToggle.classList.add('toggle-btn-inactive');
       loginForm.classList.remove('hidden');
       registerForm.classList.add('hidden');
+      clearMessages();
     });
 
     registerToggle.addEventListener('click', () => {
@@ -1038,7 +1227,35 @@
       loginToggle.classList.add('toggle-btn-inactive');
       registerForm.classList.remove('hidden');
       loginForm.classList.add('hidden');
+      clearMessages();
     });
+
+    // Message handling functions
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      setTimeout(() => {
+        errorElement.style.display = 'none';
+      }, 5000);
+    }
+
+    function showSuccess(elementId, message) {
+      const successElement = document.getElementById(elementId);
+      successElement.textContent = message;
+      successElement.style.display = 'block';
+      setTimeout(() => {
+        successElement.style.display = 'none';
+      }, 3000);
+
+      window.location.assign('../dashboard/');
+    }
+
+    function clearMessages() {
+      document.querySelectorAll('.error-message, .success-message').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
 
     // Custom Select Dropdown Implementation
     const customSelect = {
@@ -1115,80 +1332,208 @@
       }
     }
 
-    // Form validation and submission
+    // Email validation function
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Password strength validation
+    function validatePasswordStrength(password) {
+      const minLength = 6;
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasNumbers = /\d/.test(password);
+
+      const errors = [];
+
+      if (password.length < minLength) {
+        errors.push(`Password must be at least ${minLength} characters long`);
+      }
+      if (!hasLowerCase) {
+        errors.push('Password must contain at least one lowercase letter');
+      }
+      if (!hasNumbers) {
+        errors.push('Password must contain at least one number');
+      }
+
+      return {
+        isValid: errors.length === 0,
+        errors: errors
+      };
+    }
+
+    // Login Form Submission
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      clearMessages();
 
-      const email = document.getElementById('login-email').value;
+      const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
 
-      if (email && password) {
-        showSuccess();
-        setTimeout(() => {
-          window.location.href = '../dashboard/';
-        }, 2000);
+      // Basic validation
+      if (!email || !password) {
+        showError('login-error', 'Please fill in all fields.');
+        return;
       }
+
+      if (!isValidEmail(email)) {
+        showError('login-error', 'Please enter a valid email address.');
+        return;
+      }
+
+      // Check if user exists
+      const user = usersDB.findUserByEmail(email);
+      if (!user) {
+        showError('login-error', 'No account found with this email address. Please register first.');
+        return;
+      }
+
+      // Validate password
+      if (!usersDB.validatePassword(user, password)) {
+        showError('login-error', 'Invalid password. Please try again.');
+        return;
+      }
+
+      // Successful login
+      usersDB.updateUserLogin(user.id);
+
+      // Store current user session
+      localStorage.setItem('currentUser', JSON.stringify({
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        loginTime: new Date().toISOString()
+      }));
+
+      showSuccess('login-success', 'Login successful! Redirecting...');
+
+      setTimeout(() => {
+        showSuccessScreen();
+      }, 1500);
     });
 
+    // Register Form Submission
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      clearMessages();
 
-      const firstName = document.getElementById('first-name').value;
-      const lastName = document.getElementById('last-name').value;
-      const email = document.getElementById('register-email').value;
-      const phone = document.getElementById('phone').value;
+      const firstName = document.getElementById('first-name').value.trim();
+      const lastName = document.getElementById('last-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
       const location = document.getElementById('location').value;
       const password = document.getElementById('register-password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
-      const terms = document.getElementById('terms').checked;
+      const termsAccepted = document.getElementById('terms').checked;
 
-      // Validation
+      // Basic validation
+      if (!firstName || !lastName || !email || !phone || !location || !password || !confirmPassword) {
+        showError('register-error', 'Please fill in all fields.');
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        showError('register-error', 'Please enter a valid email address.');
+        return;
+      }
+
+      // Check if user already exists
+      if (usersDB.findUserByEmail(email)) {
+        showError('register-error', 'An account with this email already exists. Please login instead.');
+        return;
+      }
+
+      // Password validation
+      const passwordValidation = validatePasswordStrength(password);
+      if (!passwordValidation.isValid) {
+        showError('register-error', passwordValidation.errors.join('. '));
+        return;
+      }
+
       if (password !== confirmPassword) {
-        alert('Passwords do not match!');
+        showError('register-error', 'Passwords do not match.');
         return;
       }
 
-      if (password.length < 6) {
-        alert('Password must be at least 6 characters long!');
+      if (!termsAccepted) {
+        showError('register-error', 'Please accept the terms and conditions.');
         return;
       }
 
-      if (!terms) {
-        alert('Please accept the terms and conditions!');
+      // Phone validation (basic)
+      const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/;
+      if (!phoneRegex.test(phone)) {
+        showError('register-error', 'Please enter a valid phone number.');
         return;
       }
 
-      if (!location) {
-        alert('Please select a location!');
-        return;
-      }
-
-      if (firstName && lastName && email && phone && location && password && terms) {
-        // Save user profile to localStorage (simulating profile.json)
-        const userProfile = {
+      try {
+        // Create new user
+        const newUser = usersDB.addUser({
           firstName,
           lastName,
           email,
           phone,
           location,
-          joinDate: new Date().toISOString(),
-          plan: 'Free Trial'
-        };
+          password // In production, this should be hashed
+        });
 
-        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        // Store current user session
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: newUser.id,
+          email: newUser.email,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          loginTime: new Date().toISOString()
+        }));
 
-        showSuccess();
+        showSuccess('register-success', 'Account created successfully! Redirecting...');
+
         setTimeout(() => {
-          window.location.href = '../dashboard/';
-        }, 2000);
+          showSuccessScreen();
+        }, 1500);
+
+      } catch (error) {
+        showError('register-error', 'Registration failed. Please try again.');
+        console.error('Registration error:', error);
       }
     });
 
-    function showSuccess() {
-      document.getElementById('auth-toggle').classList.add('hidden');
-      document.getElementById('login-form').classList.add('hidden');
-      document.getElementById('register-form').classList.add('hidden');
-      document.getElementById('success-message').classList.remove('hidden');
+    // Fixed Success Screen Animation
+    function showSuccessScreen() {
+      const authToggle = document.getElementById('auth-toggle');
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const successMessage = document.getElementById('success-message');
+
+      // Hide forms with smooth transition
+      authToggle.style.opacity = '0';
+      loginForm.style.opacity = '0';
+      registerForm.style.opacity = '0';
+
+      setTimeout(() => {
+        authToggle.classList.add('hidden');
+        loginForm.classList.add('hidden');
+        registerForm.classList.add('hidden');
+
+        // Show success message with animation
+        successMessage.classList.remove('hidden');
+        successMessage.style.opacity = '0';
+
+        setTimeout(() => {
+          successMessage.style.opacity = '1';
+        }, 100);
+      }, 300);
+
+      // Simulate redirect to dashboard
+      setTimeout(() => {
+        const usersJson = usersDB.exportUsersJson();
+        console.log('Users Database (users.json format):', usersJson);
+        alert('Demo: Would redirect to dashboard now. Check console for users.json data.');
+        // In a real application: window.location.href = '/dashboard';
+      }, 3000);
     }
 
     // Input validation feedback with theme colors
@@ -1224,8 +1569,7 @@
         const errorColor = currentTheme === 'light' ? 'rgba(239, 68, 68, 0.8)' : 'rgba(248, 113, 113, 0.8)';
         const successColor = currentTheme === 'light' ? 'rgba(16, 185, 129, 0.8)' : 'rgba(6, 182, 212, 0.8)';
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(this.value)) {
+        if (!isValidEmail(this.value)) {
           this.style.borderColor = errorColor;
         } else {
           this.style.borderColor = successColor;
@@ -1236,22 +1580,60 @@
     // Password strength indicator
     document.getElementById('register-password').addEventListener('input', function () {
       const password = this.value;
-      let strength = 0;
-
-      if (password.length >= 8) strength++;
-      if (/[A-Z]/.test(password)) strength++;
-      if (/[a-z]/.test(password)) strength++;
-      if (/[0-9]/.test(password)) strength++;
-      if (/[^A-Za-z0-9]/.test(password)) strength++;
+      const validation = validatePasswordStrength(password);
 
       const currentTheme = document.documentElement.getAttribute('data-theme');
       let color = currentTheme === 'light' ? 'rgba(239, 68, 68, 0.8)' : 'rgba(248, 113, 113, 0.8)';
 
-      if (strength >= 3) color = currentTheme === 'light' ? 'rgba(251, 191, 36, 0.8)' : 'rgba(245, 158, 11, 0.8)';
-      if (strength >= 4) color = currentTheme === 'light' ? 'rgba(16, 185, 129, 0.8)' : 'rgba(6, 182, 212, 0.8)';
+      if (validation.isValid) {
+        color = currentTheme === 'light' ? 'rgba(16, 185, 129, 0.8)' : 'rgba(6, 182, 212, 0.8)';
+      } else if (password.length >= 4) {
+        color = currentTheme === 'light' ? 'rgba(251, 191, 36, 0.8)' : 'rgba(245, 158, 11, 0.8)';
+      }
 
       this.style.borderColor = color;
     });
+
+    // Enhanced checkbox functionality with fixed animation
+    document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+        // Trigger reflow to ensure animation works
+        if (this.checked) {
+          this.style.animation = 'none';
+          this.offsetHeight; // Trigger reflow
+          this.style.animation = null;
+        }
+      });
+    });
+
+    // Debug functions
+    window.viewAllUsers = function () {
+      const users = usersDB.getAllUsers();
+      console.log('All registered users:', users);
+      return users;
+    };
+
+    window.exportUsersJson = function () {
+      const usersJson = usersDB.exportUsersJson();
+      console.log('Users Database (users.json format):', usersJson);
+
+      // Create downloadable file
+      const blob = new Blob([usersJson], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'users.json';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      return usersJson;
+    };
+
+    window.clearUsersDatabase = function () {
+      localStorage.removeItem('shambaAI_users_database');
+      usersDB.init();
+      console.log('Users database cleared');
+    };
 
     // Smooth scrolling for mobile
     document.addEventListener('DOMContentLoaded', function () {
@@ -1264,6 +1646,14 @@
     document.addEventListener('DOMContentLoaded', function () {
       document.body.style.transition = 'background 0.5s ease';
     });
+
+    // Console message for developers
+    console.log('🌱 Shamba AI Authentication System Loaded');
+    console.log('📚 Available debug functions:');
+    console.log('   - viewAllUsers() - View all registered users');
+    console.log('   - exportUsersJson() - Export users database as JSON file');
+    console.log('   - clearUsersDatabase() - Clear the users database');
+    console.log('💾 User data is stored in localStorage as "shambaAI_users_database"');
   </script>
 </body>
 
