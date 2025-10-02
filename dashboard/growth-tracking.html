@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropWise Growth Tracking - Smart Farming Assistant</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- External Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- Include sidebar and header from index.html -->
+  <div id="navigation-container"></div>
+
+  <!-- Main Content -->
+  <div class="lg:ml-64 main-content">
+    <!-- Include Mobile Header -->
+    <div id="mobile-header-container"></div>
+    <!-- Include Desktop Header -->
+    <div id="desktop-header-container"></div>
+
+    <!-- Page Content -->
+    <main class="p-6 mobile-header-spacing lg:pt-6">
+      <div class="content-section">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Growth Calendar -->
+          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+            <h3 class="text-lg font-semibold text-primary mb-4">Growth Calendar</h3>
+            <div class="space-y-4">
+              <div class="flex items-center p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                  <i class="fas fa-seedling text-green-600"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-green-800">Planting Complete</p>
+                  <p class="text-sm text-green-700">Cabbage and kale seeds planted</p>
+                  <p class="text-xs text-green-600">Completed 2 weeks ago</p>
+                </div>
+              </div>
+
+              <div class="flex items-center p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                  <i class="fas fa-tint text-blue-600"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-blue-800">First Fertilizer Application</p>
+                  <p class="text-sm text-blue-700">Apply nitrogen-rich fertilizer</p>
+                  <p class="text-xs text-blue-600">Due in 3 days</p>
+                </div>
+              </div>
+
+              <div class="flex items-center p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                  <i class="fas fa-spray-can text-yellow-600"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-yellow-800">Pest Control Spraying</p>
+                  <p class="text-sm text-yellow-700">Preventive pest control treatment</p>
+                  <p class="text-xs text-yellow-600">Due in 1 week</p>
+                </div>
+              </div>
+
+              <div class="flex items-center p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                  <i class="fas fa-cut text-purple-600"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-purple-800">Harvest Time</p>
+                  <p class="text-sm text-purple-700">Cabbage and kale ready for harvest</p>
+                  <p class="text-xs text-purple-600">Expected in 6 weeks</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Growth Progress -->
+          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+            <h3 class="text-lg font-semibold text-primary mb-4">Growth Progress</h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-medium text-primary">Cabbage Growth</span>
+                  <span class="text-sm text-secondary">Week 2 of 8</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                  <div class="bg-green-600 h-3 rounded-full" style="width: 25%"></div>
+                </div>
+                <p class="text-xs text-secondary mt-1">Seedling stage - Developing true leaves</p>
+              </div>
+
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-medium text-primary">Kale Growth</span>
+                  <span class="text-sm text-secondary">Week 2 of 6</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                  <div class="bg-green-600 h-3 rounded-full" style="width: 33%"></div>
+                </div>
+                <p class="text-xs text-secondary mt-1">Vegetative stage - Leaf development</p>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-secondary rounded-lg">
+              <h4 class="font-semibold text-primary mb-2">Next Action Required</h4>
+              <p class="text-sm text-secondary">Water plants thoroughly. Soil moisture is getting low.</p>
+              <button class="mt-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+                onclick="markTaskComplete('watering')">
+                Mark as Complete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Growth Chart -->
+      <div class="content-section">
+        <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+          <h3 class="text-lg font-semibold text-primary mb-4">Growth Chart</h3>
+          <div class="chart-container">
+            <canvas id="growth-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase Configuration -->
+  <script src="js/firebase-config.js"></script>
+
+  <!-- Common JavaScript -->
+  <script src="js/common.js"></script>
+
+  <!-- Page-specific JavaScript -->
+  <script src="js/growth-tracking.js"></script>
+
+
+    <script>
+      // Load components
+      document.addEventListener('DOMContentLoaded', function () {
+        // Load navigation
+        fetch('navigation.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('navigation-container').innerHTML = html;
+          });
+
+        // Load mobile header
+        fetch('mobile-header.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('mobile-header-container').innerHTML = html;
+          });
+
+        // Load desktop header
+        fetch('desktop-header.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('desktop-header-container').innerHTML = html;
+          });
+      });
+
+
+      (function () {
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</body>
+
+</html>

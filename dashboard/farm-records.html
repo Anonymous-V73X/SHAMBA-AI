@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropWise Farm Records - Smart Farming Assistant</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- External Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- Include sidebar and header from index.html -->
+  <div id="navigation-container"></div>
+
+  <!-- Main Content -->
+  <div class="lg:ml-64 main-content">
+    <!-- Include Mobile Header -->
+    <div id="mobile-header-container"></div>
+<!-- Include Desktop Header -->
+<div id="desktop-header-container"></div>
+
+    <!-- Page Content -->
+    <main class="p-6 mobile-header-spacing lg:pt-6">
+      <div class="content-section">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Quick Stats -->
+          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+            <h3 class="text-lg font-semibold text-primary mb-4">This Month</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Total Expenses</span>
+                <span class="font-semibold text-red-600">KES 175,000</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Total Sales</span>
+                <span class="font-semibold text-green-600">KES 399,000</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Net Profit</span>
+                <span class="font-semibold text-blue-600">KES 224,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+            <h3 class="text-lg font-semibold text-primary mb-4">Activities</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Planted</span>
+                <span class="font-semibold text-primary">2.5 hectares</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Harvested</span>
+                <span class="font-semibold text-primary">1.2 hectares</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-secondary">Treatments</span>
+                <span class="font-semibold text-primary">8 applications</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+            <h3 class="text-lg font-semibold text-primary mb-4">Add Record</h3>
+            <div class="space-y-2">
+              <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 text-sm"
+                onclick="showAddRecordModal('expense')">
+                <i class="fas fa-plus mr-2"></i>Add Expense
+              </button>
+              <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 text-sm"
+                onclick="showAddRecordModal('sale')">
+                <i class="fas fa-plus mr-2"></i>Add Sale
+              </button>
+              <button class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 text-sm"
+                onclick="showAddRecordModal('activity')">
+                <i class="fas fa-plus mr-2"></i>Add Activity
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Records Table -->
+      <div class="content-section">
+        <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-primary">Recent Records</h3>
+            <div class="flex space-x-2">
+              <button class="px-4 py-2 bg-secondary text-primary rounded-lg hover:bg-gray-300 text-sm">
+                <i class="fas fa-filter mr-2"></i>Filter
+              </button>
+              <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
+                onclick="exportRecords()">
+                <i class="fas fa-download mr-2"></i>Export
+              </button>
+            </div>
+          </div>
+          <div class="overflow-x-auto hide-scrollbar">
+            <table class="w-full text-sm">
+              <thead class="bg-secondary">
+                <tr>
+                  <th class="px-4 py-3 text-left text-primary">Date</th>
+                  <th class="px-4 py-3 text-left text-primary">Type</th>
+                  <th class="px-4 py-3 text-left text-primary">Description</th>
+                  <th class="px-4 py-3 text-left text-primary">Amount</th>
+                  <th class="px-4 py-3 text-left text-primary">Category</th>
+                  <th class="px-4 py-3 text-left text-primary">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200" id="records-table-body">
+                <!-- Records will be loaded here from Firebase -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial Summary Chart -->
+      <div class="content-section">
+        <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+          <h3 class="text-lg font-semibold text-primary mb-4">Financial Summary</h3>
+          <div class="chart-container" style="height: 300px;">
+            <canvas id="financial-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Record Modal -->
+  <div id="add-record-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-primary" id="modal-title">Add Record</h3>
+          <button class="text-gray-500 hover:text-gray-700" onclick="closeAddRecordModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="add-record-form">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-primary mb-1">Date</label>
+              <input type="date" id="record-date"
+                class="w-full p-2 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-primary mb-1">Description</label>
+              <input type="text" id="record-description"
+                class="w-full p-2 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            </div>
+            <div id="amount-field">
+              <label class="block text-sm font-medium text-primary mb-1">Amount (KES)</label>
+              <input type="number" id="record-amount"
+                class="w-full p-2 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-primary mb-1">Category</label>
+              <select id="record-category"
+                class="w-full p-2 border border-primary rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                <option value="">Select Category</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end space-x-3">
+            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+              onclick="closeAddRecordModal()">
+              Cancel
+            </button>
+            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+              Save Record
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Configuration -->
+  <script src="js/firebase-config.js"></script>
+
+  <!-- Common JavaScript -->
+  <script src="js/common.js"></script>
+
+  <!-- Page-specific JavaScript -->
+  <script src="js/farm-records.js"></script>
+
+
+    <script>
+      // Load components
+      document.addEventListener('DOMContentLoaded', function () {
+        // Load navigation
+        fetch('navigation.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('navigation-container').innerHTML = html;
+          });
+
+        // Load mobile header
+        fetch('mobile-header.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('mobile-header-container').innerHTML = html;
+          });
+
+        // Load desktop header
+        fetch('desktop-header.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('desktop-header-container').innerHTML = html;
+          });
+      });
+
+
+
+      (function () {
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</body>
+
+</html>
