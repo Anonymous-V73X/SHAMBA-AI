@@ -471,7 +471,7 @@ function calculateExpectedYield() {
           ".card-hover .text-2xl"
         )[1];
         if (yieldElement) {
-          yieldElement.textContent = `${totalYield.toFixed(1)} tonnes`;
+          yieldElement.textContent = `${totalYield.toFixed(2)} tonnes`; // Changed from toFixed(1) to toFixed(2)
         }
 
         // Save to Firebase

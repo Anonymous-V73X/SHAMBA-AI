@@ -390,93 +390,116 @@
 
 
 
-        // Theme toggle functionality
-          function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
-            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            // Theme toggle functionality
+              function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+                const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-            // Apply theme to document
-            document.documentElement.setAttribute("data-theme", newTheme);
+                // Apply theme to document
+                document.documentElement.setAttribute("data-theme", newTheme);
 
-            // Update toggle state
-            const themeToggle = document.getElementById('desktop-theme-toggle');
-            if (themeToggle) {
-              // Force reflow to ensure transition works
-              void themeToggle.offsetWidth;
+                // Update toggle state for both mobile and desktop
+                const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+                const desktopThemeToggle = document.getElementById('desktop-theme-toggle');
 
-              if (newTheme === "dark") {
-                themeToggle.classList.add("active");
-              } else {
-                themeToggle.classList.remove("active");
-              }
-            }
-
-            // Save to localStorage
-            localStorage.setItem("theme", newTheme);
-
-            // Save to Firebase if user is logged in
-            const userData = getCurrentUserData();
-            if (userData) {
-              const emailKey = userData.email.replace(/\./g, "_");
-              database.ref("users/" + emailKey).update({ theme: newTheme })
-                .then(() => console.log("Theme saved to Firebase:", newTheme))
-                .catch(error => console.error("Error saving theme to Firebase:", error));
-            }
-          }
-
-          // Get current user data
-          function getCurrentUserData() {
-            try {
-              const userData = localStorage.getItem("userData");
-              return userData ? JSON.parse(userData) : null;
-            } catch (e) {
-              return null;
-            }
-          }
-
-          // Load components
-          document.addEventListener('DOMContentLoaded', function () {
-            // Load navigation
-            fetch('navigation.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('navigation-container').innerHTML = html;
-
-                // Apply theme to toggle after navigation is loaded
-                const savedTheme = localStorage.getItem('theme') || 'dark';
-                const themeToggle = document.getElementById('desktop-theme-toggle');
-                if (themeToggle) {
-                  // Force reflow to ensure transition works
-                  void themeToggle.offsetWidth;
-
-                  if (savedTheme === 'dark') {
-                    themeToggle.classList.add('active');
+                if (mobileThemeToggle) {
+                  void mobileThemeToggle.offsetWidth; // Force reflow
+                  if (newTheme === "dark") {
+                    mobileThemeToggle.classList.add("active");
                   } else {
-                    themeToggle.classList.remove('active');
+                    mobileThemeToggle.classList.remove("active");
                   }
-
-                  // Add click event listener
-                  themeToggle.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    toggleTheme();
-                  });
                 }
-              });
 
-            // Load mobile header
-            fetch('mobile-header.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('mobile-header-container').innerHTML = html;
-              });
+                if (desktopThemeToggle) {
+                  void desktopThemeToggle.offsetWidth; // Force reflow
+                  if (newTheme === "dark") {
+                    desktopThemeToggle.classList.add("active");
+                  } else {
+                    desktopThemeToggle.classList.remove("active");
+                  }
+                }
 
-            // Load desktop header
-            fetch('desktop-header.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('desktop-header-container').innerHTML = html;
+                // Save to localStorage
+                localStorage.setItem("theme", newTheme);
+
+                // Save to Firebase if user is logged in
+                const userData = getCurrentUserData();
+                if (userData) {
+                  const emailKey = userData.email.replace(/\./g, "_");
+                  database.ref("users/" + emailKey).update({ theme: newTheme })
+                    .then(() => console.log("Theme saved to Firebase:", newTheme))
+                    .catch(error => console.error("Error saving theme to Firebase:", error));
+                }
+              }
+
+              // Get current user data
+              function getCurrentUserData() {
+                try {
+                  const userData = localStorage.getItem("userData");
+                  return userData ? JSON.parse(userData) : null;
+                } catch (e) {
+                  return null;
+                }
+              }
+
+              // Load components
+              document.addEventListener('DOMContentLoaded', function () {
+                // Load navigation
+                fetch('navigation.html')
+                  .then(response => response.text())
+                  .then(html => {
+                    document.getElementById('navigation-container').innerHTML = html;
+                  });
+
+                // Load mobile header
+                fetch('mobile-header.html')
+                  .then(response => response.text())
+                  .then(html => {
+                    document.getElementById('mobile-header-container').innerHTML = html;
+
+                    // Initialize mobile theme toggle after loading
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+                    if (mobileThemeToggle) {
+                      void mobileThemeToggle.offsetWidth; // Force reflow
+                      if (savedTheme === 'dark') {
+                        mobileThemeToggle.classList.add('active');
+                      } else {
+                        mobileThemeToggle.classList.remove('active');
+                      }
+
+                      mobileThemeToggle.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        toggleTheme();
+                      });
+                    }
+                  });
+
+                // Load desktop header
+                fetch('desktop-header.html')
+                  .then(response => response.text())
+                  .then(html => {
+                    document.getElementById('desktop-header-container').innerHTML = html;
+
+                    // Initialize desktop theme toggle after loading
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    const desktopThemeToggle = document.getElementById('desktop-theme-toggle');
+                    if (desktopThemeToggle) {
+                      void desktopThemeToggle.offsetWidth; // Force reflow
+                      if (savedTheme === 'dark') {
+                        desktopThemeToggle.classList.add('active');
+                      } else {
+                        desktopThemeToggle.classList.remove('active');
+                      }
+
+                      desktopThemeToggle.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        toggleTheme();
+                      });
+                    }
+                  });
               });
-          });
   </script>
 </body>
 
