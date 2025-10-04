@@ -19,6 +19,206 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+
+
+    <style>
+      /* Theme toggle styles */
+      .theme-toggle {
+        position: relative;
+        width: 50px;
+        height: 30px;
+        background: #374151;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+    
+      .theme-toggle.active {
+        background: #10b981;
+      }
+    
+      .theme-toggle::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 24px;
+        height: 24px;
+        background: white;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+    
+      .theme-toggle.active::before {
+        transform: translateX(21px);
+      }
+    
+      .theme-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+    
+      .sun-icon {
+        left: 6px;
+        color: #e7f5ef;
+        opacity: 0;
+    
+      }
+    
+      .moon-icon {
+        right: 0px;
+        opacity: 1;
+        color: #fbbf24;
+      }
+    
+      .theme-toggle.active .sun-icon {
+        opacity: 0;
+      }
+    
+      .theme-toggle.active .moon-icon {
+        opacity: 0;
+      }
+    
+      /* Typing indicator */
+      .typing-indicator {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+      }
+    
+      .typing-indicator span {
+        height: 8px;
+        width: 8px;
+        background-color: #10B981;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 2px;
+        animation: typing 1.4s infinite ease-in-out;
+      }
+    
+      .typing-indicator span:nth-child(1) {
+        animation-delay: 0s;
+      }
+    
+      .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+    
+      .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    
+      @keyframes typing {
+    
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+    
+        30% {
+          transform: translateY(-10px);
+        }
+      }
+    
+      /* Conversation list styles */
+      .conversation-list {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+    
+      .conversation-item {
+        padding: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+    
+      .conversation-item:hover {
+        background-color: #f3f4f6;
+      }
+    
+      .conversation-item.active {
+        background-color: #e5f3f0;
+        border-left: 3px solid #10b981;
+      }
+    
+      [data-theme="dark"] .conversation-item {
+        border-bottom-color: #374151;
+      }
+    
+      [data-theme="dark"] .conversation-item:hover {
+        background-color: #374151;
+      }
+    
+      [data-theme="dark"] .conversation-item.active {
+        background-color: #1e3a2e;
+      }
+    
+      /* Formatted message styles */
+      .formatted-message {
+        line-height: 1.6;
+      }
+    
+      .formatted-message h1,
+      .formatted-message h2,
+      .formatted-message h3 {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+    
+      .formatted-message h1 {
+        font-size: 1.5rem;
+      }
+    
+      .formatted-message h2 {
+        font-size: 1.25rem;
+      }
+    
+      .formatted-message h3 {
+        font-size: 1.1rem;
+      }
+    
+      .formatted-message p {
+        margin-bottom: 0.75rem;
+      }
+    
+      .formatted-message ul,
+      .formatted-message ol {
+        margin-left: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+    
+      .formatted-message li {
+        margin-bottom: 0.25rem;
+      }
+    
+      .formatted-message strong,
+      .formatted-message b {
+        font-weight: 600;
+      }
+    
+      .formatted-message em,
+      .formatted-message i {
+        font-style: italic;
+      }
+    
+      .formatted-message code {
+        background-color: #f3f4f6;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+      }
+    
+      [data-theme="dark"] .formatted-message code {
+        background-color: #374151;
+      }
+    </style>
 </head>
 
 <body>
@@ -37,26 +237,28 @@
     <main class="p-6 mobile-header-spacing lg:pt-6">
       <div class="content-section">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Current Weather -->
-          <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
-            <h3 class="text-lg font-semibold text-primary mb-4 text-center">Current Weather</h3>
-            <div class="text-center">
-              <i class="fas fa-sun text-6xl text-yellow-500 mb-4"></i>
-              <p class="text-3xl font-bold text-primary">22°C</p>
-              <p class="text-secondary mb-4">Sunny</p>
-              <div class="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p class="text-secondary">Humidity</p>
-                  <p class="font-semibold text-primary">65%</p>
-                </div>
-                <div>
-                  <p class="text-secondary">Wind</p>
-                  <p class="font-semibold text-primary">12 km/h</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
+<!-- Current Weather -->
+<div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+  <h3 class="text-lg font-semibold text-primary mb-4 text-center">Current Weather</h3>
+  <div class="text-center">
+    <div class="location-display text-secondary mb-3">
+      <i class="fas fa-map-marker-alt mr-2"></i>Loading location...
+    </div>
+    <i class="fas fa-sun text-6xl text-yellow-500 mb-4"></i>
+    <p class="text-3xl font-bold text-primary">22°C</p>
+    <p class="text-secondary mb-4">Sunny</p>
+    <div class="grid grid-cols-2 gap-4 text-sm">
+      <div>
+        <p class="text-secondary">Humidity</p>
+        <p class="font-semibold text-primary">65%</p>
+      </div>
+      <div>
+        <p class="text-secondary">Wind</p>
+        <p class="font-semibold text-primary">12 km/h</p>
+      </div>
+    </div>
+  </div>
+</div>
           <!-- Smart Recommendations -->
           <div class="lg:col-span-2 card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Smart Recommendations</h3>
@@ -185,6 +387,96 @@
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
       })();
+
+
+
+        // Theme toggle functionality
+          function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+            // Apply theme to document
+            document.documentElement.setAttribute("data-theme", newTheme);
+
+            // Update toggle state
+            const themeToggle = document.getElementById('desktop-theme-toggle');
+            if (themeToggle) {
+              // Force reflow to ensure transition works
+              void themeToggle.offsetWidth;
+
+              if (newTheme === "dark") {
+                themeToggle.classList.add("active");
+              } else {
+                themeToggle.classList.remove("active");
+              }
+            }
+
+            // Save to localStorage
+            localStorage.setItem("theme", newTheme);
+
+            // Save to Firebase if user is logged in
+            const userData = getCurrentUserData();
+            if (userData) {
+              const emailKey = userData.email.replace(/\./g, "_");
+              database.ref("users/" + emailKey).update({ theme: newTheme })
+                .then(() => console.log("Theme saved to Firebase:", newTheme))
+                .catch(error => console.error("Error saving theme to Firebase:", error));
+            }
+          }
+
+          // Get current user data
+          function getCurrentUserData() {
+            try {
+              const userData = localStorage.getItem("userData");
+              return userData ? JSON.parse(userData) : null;
+            } catch (e) {
+              return null;
+            }
+          }
+
+          // Load components
+          document.addEventListener('DOMContentLoaded', function () {
+            // Load navigation
+            fetch('navigation.html')
+              .then(response => response.text())
+              .then(html => {
+                document.getElementById('navigation-container').innerHTML = html;
+
+                // Apply theme to toggle after navigation is loaded
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                const themeToggle = document.getElementById('desktop-theme-toggle');
+                if (themeToggle) {
+                  // Force reflow to ensure transition works
+                  void themeToggle.offsetWidth;
+
+                  if (savedTheme === 'dark') {
+                    themeToggle.classList.add('active');
+                  } else {
+                    themeToggle.classList.remove('active');
+                  }
+
+                  // Add click event listener
+                  themeToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    toggleTheme();
+                  });
+                }
+              });
+
+            // Load mobile header
+            fetch('mobile-header.html')
+              .then(response => response.text())
+              .then(html => {
+                document.getElementById('mobile-header-container').innerHTML = html;
+              });
+
+            // Load desktop header
+            fetch('desktop-header.html')
+              .then(response => response.text())
+              .then(html => {
+                document.getElementById('desktop-header-container').innerHTML = html;
+              });
+          });
   </script>
 </body>
 

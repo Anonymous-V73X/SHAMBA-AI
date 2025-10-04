@@ -3,6 +3,9 @@
 // ===============================================
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize database with original prices if not already present
+  initializeDatabaseWithOriginalPrices();
+
   // Load market prices from Firebase
   loadMarketPrices();
 
@@ -12,6 +15,71 @@ document.addEventListener("DOMContentLoaded", function () {
   // Load market insights
   loadMarketInsights();
 });
+
+function initializeDatabaseWithOriginalPrices() {
+  // Check if prices already exist
+  database
+    .ref("marketPrices")
+    .once("value")
+    .then((snapshot) => {
+      if (!snapshot.exists()) {
+        // Add original prices to database
+        const originalPrices = {
+          cabbage: {
+            green: 350,
+            red: 448,
+            savoy: 532,
+          },
+          kale: {
+            sukuma: 120,
+            curly: 250,
+            lacinato: 400,
+          },
+        };
+
+        database
+          .ref("marketPrices")
+          .set(originalPrices)
+          .then(() => {
+            console.log("Original market prices added to database");
+          })
+          .catch((error) => {
+            console.error("Error adding original prices:", error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking market prices:", error);
+    });
+
+  // Check if trends already exist
+  database
+    .ref("priceTrends")
+    .once("value")
+    .then((snapshot) => {
+      if (!snapshot.exists()) {
+        // Add original trends to database
+        const originalTrends = {
+          week: 5.2,
+          month: 12.8,
+          season: -3.5,
+        };
+
+        database
+          .ref("priceTrends")
+          .set(originalTrends)
+          .then(() => {
+            console.log("Original price trends added to database");
+          })
+          .catch((error) => {
+            console.error("Error adding original trends:", error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking price trends:", error);
+    });
+}
 
 function loadMarketPrices() {
   const userData = getCurrentUserData();
@@ -95,25 +163,30 @@ function updateKalePrices(prices) {
   )[1];
   if (!kaleCard) return;
 
-  const curlyKalePrice = kaleCard.querySelector(
-    ".font-semibold.text-green-600"
+  // Find each kale type by its text content and then update the price
+  const kaleItems = kaleCard.querySelectorAll(
+    ".flex.justify-between.items-center"
   );
-  const lacinatoKalePrice = kaleCard.querySelectorAll(".font-semibold")[1];
-  const redKalePrice = kaleCard.querySelectorAll(".font-semibold")[2];
 
-  if (curlyKalePrice && prices.curly) {
-    curlyKalePrice.textContent = "KES " + prices.curly + "/kg";
-  }
+  kaleItems.forEach((item) => {
+    const label = item.querySelector(".text-sm.text-secondary");
+    const priceElement = item.querySelector(".font-semibold");
 
-  if (lacinatoKalePrice && prices.lacinato) {
-    lacinatoKalePrice.textContent = "KES " + prices.lacinato + "/kg";
-    lacinatoKalePrice.className = "font-semibold text-blue-600";
-  }
+    if (label && priceElement) {
+      const labelText = label.textContent.trim();
 
-  if (redKalePrice && prices.red) {
-    redKalePrice.textContent = "KES " + prices.red + "/kg";
-    redKalePrice.className = "font-semibold text-red-600";
-  }
+      if (labelText === "Sukuma Wiki" && prices.sukuma) {
+        priceElement.textContent = "KES " + prices.sukuma + "/kg";
+        priceElement.className = "font-semibold text-green-600";
+      } else if (labelText === "Curly Kale" && prices.curly) {
+        priceElement.textContent = "KES " + prices.curly + "/kg";
+        priceElement.className = "font-semibold text-blue-600";
+      } else if (labelText === "Lacinato Kale" && prices.lacinato) {
+        priceElement.textContent = "KES " + prices.lacinato + "/kg";
+        priceElement.className = "font-semibold text-red-600";
+      }
+    }
+  });
 }
 
 function updatePriceTrends(trends) {
@@ -216,4 +289,14 @@ function saveMarketPrices(prices) {
     .catch((error) => {
       console.error("Error saving market prices:", error);
     });
+}
+
+// Get current user data
+function getCurrentUserData() {
+  try {
+    const userData = localStorage.getItem("userData");
+    return userData ? JSON.parse(userData) : null;
+  } catch (e) {
+    return null;
+  }
 }

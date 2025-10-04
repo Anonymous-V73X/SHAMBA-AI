@@ -20,6 +20,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+ 
 </head>
 
 <body>
@@ -96,6 +98,9 @@
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4 text-center">Today's Weather</h3>
             <div class="text-center">
+              <div class="location-display text-secondary mb-3">
+                <i class="fas fa-map-marker-alt mr-2"></i>Loading location...
+              </div>
               <i class="fas fa-sun weather-icon mb-4"></i>
               <p class="text-3xl font-bold text-primary">22°C</p>
               <p class="text-secondary mb-4">Sunny</p>
@@ -170,6 +175,65 @@
   <script src="js/dashboard.js"></script>
 
   <script>
+    // Apply saved theme on page load
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+    // Theme toggle functionality
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      // Apply theme to document
+      document.documentElement.setAttribute("data-theme", newTheme);
+
+      // Update toggle state for both mobile and desktop
+      const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+      const desktopThemeToggle = document.getElementById('desktop-theme-toggle');
+
+      if (mobileThemeToggle) {
+        void mobileThemeToggle.offsetWidth; // Force reflow
+        if (newTheme === "dark") {
+          mobileThemeToggle.classList.add("active");
+        } else {
+          mobileThemeToggle.classList.remove("active");
+        }
+      }
+
+      if (desktopThemeToggle) {
+        void desktopThemeToggle.offsetWidth; // Force reflow
+        if (newTheme === "dark") {
+          desktopThemeToggle.classList.add("active");
+        } else {
+          desktopThemeToggle.classList.remove("active");
+        }
+      }
+
+      // Save to localStorage
+      localStorage.setItem("theme", newTheme);
+
+      // Save to Firebase if user is logged in
+      const userData = getCurrentUserData();
+      if (userData) {
+        const emailKey = userData.email.replace(/\./g, "_");
+        database.ref("users/" + emailKey).update({ theme: newTheme })
+          .then(() => console.log("Theme saved to Firebase:", newTheme))
+          .catch(error => console.error("Error saving theme to Firebase:", error));
+      }
+    }
+
+    // Get current user data
+    function getCurrentUserData() {
+      try {
+        const userData = localStorage.getItem("userData");
+        return userData ? JSON.parse(userData) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
     // Load components
     document.addEventListener('DOMContentLoaded', function () {
       // Load navigation
@@ -184,6 +248,23 @@
         .then(response => response.text())
         .then(html => {
           document.getElementById('mobile-header-container').innerHTML = html;
+
+          // Initialize mobile theme toggle after loading
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+          if (mobileThemeToggle) {
+            void mobileThemeToggle.offsetWidth; // Force reflow
+            if (savedTheme === 'dark') {
+              mobileThemeToggle.classList.add('active');
+            } else {
+              mobileThemeToggle.classList.remove('active');
+            }
+
+            mobileThemeToggle.addEventListener('click', function (e) {
+              e.stopPropagation();
+              toggleTheme();
+            });
+          }
         });
 
       // Load desktop header
@@ -191,13 +272,25 @@
         .then(response => response.text())
         .then(html => {
           document.getElementById('desktop-header-container').innerHTML = html;
+
+          // Initialize desktop theme toggle after loading
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          const desktopThemeToggle = document.getElementById('desktop-theme-toggle');
+          if (desktopThemeToggle) {
+            void desktopThemeToggle.offsetWidth; // Force reflow
+            if (savedTheme === 'dark') {
+              desktopThemeToggle.classList.add('active');
+            } else {
+              desktopThemeToggle.classList.remove('active');
+            }
+
+            desktopThemeToggle.addEventListener('click', function (e) {
+              e.stopPropagation();
+              toggleTheme();
+            });
+          }
         });
     });
-
-    (function () {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      })();
   </script>
 </body>
 

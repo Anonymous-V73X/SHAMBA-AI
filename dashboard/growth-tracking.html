@@ -20,6 +20,126 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Additional styles to ensure theme compatibility */
+    .growth-stage-green {
+      background-color: rgba(16, 185, 129, 0.1);
+      border-color: #10b981;
+    }
+
+    .growth-stage-blue {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+    }
+
+    .growth-stage-purple {
+      background-color: rgba(139, 92, 246, 0.1);
+      border-color: #8b5cf6;
+    }
+
+    .growth-stage-yellow {
+      background-color: rgba(245, 158, 11, 0.1);
+      border-color: #f59e0b;
+    }
+
+    .growth-stage-red {
+      background-color: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+    }
+
+    .growth-icon-green {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .growth-icon-blue {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+
+    .growth-icon-purple {
+      background-color: rgba(139, 92, 246, 0.2);
+      color: #8b5cf6;
+    }
+
+    .growth-icon-yellow {
+      background-color: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .growth-icon-red {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    [data-theme="dark"] .growth-stage-green {
+      background-color: rgba(16, 185, 129, 0.2);
+    }
+
+    [data-theme="dark"] .growth-stage-blue {
+      background-color: rgba(59, 130, 246, 0.2);
+    }
+
+    [data-theme="dark"] .growth-stage-purple {
+      background-color: rgba(139, 92, 246, 0.2);
+    }
+
+    [data-theme="dark"] .growth-stage-yellow {
+      background-color: rgba(245, 158, 11, 0.2);
+    }
+
+    [data-theme="dark"] .growth-stage-red {
+      background-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .form-input {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .form-input:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .btn-primary {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #059669;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .notification-success {
+      background-color: #10b981;
+    }
+
+    .notification-error {
+      background-color: #ef4444;
+    }
+
+    .info-box {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 
 <body>
@@ -40,89 +160,98 @@
           <!-- Growth Calendar -->
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Growth Calendar</h3>
-            <div class="space-y-4">
-              <div class="flex items-center p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                  <i class="fas fa-seedling text-green-600"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="font-semibold text-green-800">Planting Complete</p>
-                  <p class="text-sm text-green-700">Cabbage and kale seeds planted</p>
-                  <p class="text-xs text-green-600">Completed 2 weeks ago</p>
-                </div>
-              </div>
-
-              <div class="flex items-center p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                  <i class="fas fa-tint text-blue-600"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="font-semibold text-blue-800">First Fertilizer Application</p>
-                  <p class="text-sm text-blue-700">Apply nitrogen-rich fertilizer</p>
-                  <p class="text-xs text-blue-600">Due in 3 days</p>
-                </div>
-              </div>
-
-              <div class="flex items-center p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
-                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                  <i class="fas fa-spray-can text-yellow-600"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="font-semibold text-yellow-800">Pest Control Spraying</p>
-                  <p class="text-sm text-yellow-700">Preventive pest control treatment</p>
-                  <p class="text-xs text-yellow-600">Due in 1 week</p>
-                </div>
-              </div>
-
-              <div class="flex items-center p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                  <i class="fas fa-cut text-purple-600"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="font-semibold text-purple-800">Harvest Time</p>
-                  <p class="text-sm text-purple-700">Cabbage and kale ready for harvest</p>
-                  <p class="text-xs text-purple-600">Expected in 6 weeks</p>
-                </div>
-              </div>
+            <div id="growth-calendar" class="space-y-4">
+              <!-- Calendar items will be dynamically loaded here -->
             </div>
           </div>
 
           <!-- Growth Progress -->
           <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
             <h3 class="text-lg font-semibold text-primary mb-4">Growth Progress</h3>
-            <div class="space-y-6">
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-sm font-medium text-primary">Cabbage Growth</span>
-                  <span class="text-sm text-secondary">Week 2 of 8</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-3">
-                  <div class="bg-green-600 h-3 rounded-full" style="width: 25%"></div>
-                </div>
-                <p class="text-xs text-secondary mt-1">Seedling stage - Developing true leaves</p>
-              </div>
-
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-sm font-medium text-primary">Kale Growth</span>
-                  <span class="text-sm text-secondary">Week 2 of 6</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-3">
-                  <div class="bg-green-600 h-3 rounded-full" style="width: 33%"></div>
-                </div>
-                <p class="text-xs text-secondary mt-1">Vegetative stage - Leaf development</p>
-              </div>
+            <div id="growth-progress" class="space-y-6">
+              <!-- Progress items will be dynamically loaded here -->
             </div>
 
-            <div class="mt-6 p-4 bg-secondary rounded-lg">
-              <h4 class="font-semibold text-primary mb-2">Next Action Required</h4>
-              <p class="text-sm text-secondary">Water plants thoroughly. Soil moisture is getting low.</p>
-              <button class="mt-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
-                onclick="markTaskComplete('watering')">
-                Mark as Complete
-              </button>
+            <div id="next-action" class="mt-6 p-4 bg-secondary rounded-lg">
+              <!-- Next action will be dynamically loaded here -->
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Add Growth Entry Form -->
+      <div class="content-section mt-6">
+        <div class="card-bg rounded-xl shadow-sm p-6 border border-primary">
+          <h3 class="text-lg font-semibold text-primary mb-4">Add Growth Entry</h3>
+          <form id="growth-entry-form" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="crop-type" class="block text-sm font-medium text-primary mb-1">Crop Type</label>
+                <select id="crop-type" class="form-input w-full p-2 rounded-lg" required>
+                  <option value="">Select a crop</option>
+                  <option value="cabbage">Cabbage</option>
+                  <option value="kale">Kale</option>
+                  <option value="tomato">Tomato</option>
+                  <option value="lettuce">Lettuce</option>
+                  <option value="carrot">Carrot</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="growth-stage" class="block text-sm font-medium text-primary mb-1">Growth Stage</label>
+                <select id="growth-stage" class="form-input w-full p-2 rounded-lg" required>
+                  <option value="">Select a stage</option>
+                  <option value="seedling">Seedling</option>
+                  <option value="vegetative">Vegetative</option>
+                  <option value="flowering">Flowering</option>
+                  <option value="fruiting">Fruiting</option>
+                  <option value="harvest">Harvest</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="plant-date" class="block text-sm font-medium text-primary mb-1">Planting Date</label>
+                <input type="date" id="plant-date" class="form-input w-full p-2 rounded-lg" required>
+              </div>
+
+              <div>
+                <label for="current-height" class="block text-sm font-medium text-primary mb-1">Current Height
+                  (cm)</label>
+                <input type="number" id="current-height" min="0" step="0.1" class="form-input w-full p-2 rounded-lg"
+                  required>
+              </div>
+
+              <div>
+                <label for="health-status" class="block text-sm font-medium text-primary mb-1">Health Status</label>
+                <select id="health-status" class="form-input w-full p-2 rounded-lg" required>
+                  <option value="">Select status</option>
+                  <option value="excellent">Excellent</option>
+                  <option value="good">Good</option>
+                  <option value="fair">Fair</option>
+                  <option value="poor">Poor</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="notes" class="block text-sm font-medium text-primary mb-1">Notes</label>
+              <textarea id="notes" rows="3" class="form-input w-full p-2 rounded-lg"
+                placeholder="Add any additional notes about this crop..."></textarea>
+            </div>
+
+            <div id="harvest-info" class="info-box hidden">
+              <p class="text-sm text-secondary">
+                <i class="fas fa-info-circle mr-2"></i>
+                <span id="harvest-text"></span>
+              </p>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="btn-primary px-6 py-2 rounded-lg transition-colors">
+                <i class="fas fa-save mr-2"></i>Save Growth Entry
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -147,8 +276,82 @@
   <!-- Page-specific JavaScript -->
   <script src="js/growth-tracking.js"></script>
 
+  <script>
+    // Load components
+    document.addEventListener('DOMContentLoaded', function () {
+      // Load navigation
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('navigation-container').innerHTML = html;
+        });
 
-    <script>
+      // Load mobile header
+      fetch('mobile-header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('mobile-header-container').innerHTML = html;
+        });
+
+      // Load desktop header
+      fetch('desktop-header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('desktop-header-container').innerHTML = html;
+        });
+    });
+
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+
+
+    // Theme toggle functionality
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        // Apply theme to document
+        document.documentElement.setAttribute("data-theme", newTheme);
+
+        // Update toggle state
+        const themeToggle = document.getElementById('desktop-theme-toggle');
+        if (themeToggle) {
+          // Force reflow to ensure transition works
+          void themeToggle.offsetWidth;
+
+          if (newTheme === "dark") {
+            themeToggle.classList.add("active");
+          } else {
+            themeToggle.classList.remove("active");
+          }
+        }
+
+        // Save to localStorage
+        localStorage.setItem("theme", newTheme);
+
+        // Save to Firebase if user is logged in
+        const userData = getCurrentUserData();
+        if (userData) {
+          const emailKey = userData.email.replace(/\./g, "_");
+          database.ref("users/" + emailKey).update({ theme: newTheme })
+            .then(() => console.log("Theme saved to Firebase:", newTheme))
+            .catch(error => console.error("Error saving theme to Firebase:", error));
+        }
+      }
+
+      // Get current user data
+      function getCurrentUserData() {
+        try {
+          const userData = localStorage.getItem("userData");
+          return userData ? JSON.parse(userData) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
       // Load components
       document.addEventListener('DOMContentLoaded', function () {
         // Load navigation
@@ -156,6 +359,26 @@
           .then(response => response.text())
           .then(html => {
             document.getElementById('navigation-container').innerHTML = html;
+
+            // Apply theme to toggle after navigation is loaded
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const themeToggle = document.getElementById('desktop-theme-toggle');
+            if (themeToggle) {
+              // Force reflow to ensure transition works
+              void themeToggle.offsetWidth;
+
+              if (savedTheme === 'dark') {
+                themeToggle.classList.add('active');
+              } else {
+                themeToggle.classList.remove('active');
+              }
+
+              // Add click event listener
+              themeToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleTheme();
+              });
+            }
           });
 
         // Load mobile header
@@ -172,13 +395,7 @@
             document.getElementById('desktop-header-container').innerHTML = html;
           });
       });
-
-
-      (function () {
-          const savedTheme = localStorage.getItem('theme') || 'dark';
-          document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
+  </script>
 </body>
 
 </html>

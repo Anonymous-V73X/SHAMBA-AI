@@ -265,6 +265,18 @@ loginFormElement.addEventListener("submit", function (e) {
 });
 
 // Register Form Submission
+// Add this function to clear all storage
+function clearAllStorage() {
+  // Clear all localStorage
+  localStorage.clear();
+  
+  // Clear all sessionStorage
+  sessionStorage.clear();
+  
+  console.log("All storage cleared");
+}
+
+// Modify your registration form submission handler
 registerFormElement.addEventListener("submit", function (e) {
   e.preventDefault();
   clearMessages();
@@ -321,12 +333,41 @@ registerFormElement.addEventListener("submit", function (e) {
     return;
   }
 
-  // Firebase Authentication
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
+  // Check if user exists first
+  firebase.auth().fetchSignInMethodsForEmail(email)
+    .then((signInMethods) => {
+      if (signInMethods.length > 0) {
+        // User already exists, clear storage and proceed with re-registration
+        clearAllStorage();
+        
+        // Show a message to the user
+        showSuccess("register-success", "Existing account detected. Creating new session...");
+        
+        // Sign in the user first to be able to delete their account
+        return firebase.auth().signInWithEmailAndPassword(email, password)
+          .catch(() => {
+            // If sign in fails, we can't proceed with account deletion
+            throw new Error("Existing account found but password doesn't match. Please login instead.");
+          });
+      }
+      // User doesn't exist, proceed with normal registration
+      return Promise.resolve({ user: null });
+    })
+    .then((result) => {
+      if (result && result.user) {
+        // User was signed in, now delete their account
+        return result.user.delete()
+          .then(() => {
+            // Account deleted, now create a new one
+            return firebase.auth().createUserWithEmailAndPassword(email, password);
+          });
+      } else {
+        // User didn't exist, create a new account
+        return firebase.auth().createUserWithEmailAndPassword(email, password);
+      }
+    })
     .then((userCredential) => {
-      // Signed in
+      // Signed in or re-registered
       const user = userCredential.user;
       console.log("User registered successfully!");
 
@@ -374,7 +415,6 @@ registerFormElement.addEventListener("submit", function (e) {
       }
     });
 });
-
 // Fixed Success Screen Animation
 function showSuccessScreen() {
   const authToggle = document.getElementById("auth-toggle");

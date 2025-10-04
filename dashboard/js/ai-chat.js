@@ -219,8 +219,7 @@ function saveMessageToChat(message, isUser) {
 }
 
 function generateAIResponse(userMessage) {
-  // In a real application, you would connect to an AI service
-  // For this example, we'll use simple pattern matching
+
 
   const lowerMessage = userMessage.toLowerCase();
 

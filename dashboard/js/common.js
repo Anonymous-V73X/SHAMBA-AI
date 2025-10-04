@@ -137,8 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Setup theme toggles
   setupThemeToggles();
 
+  // Setup mobile menu
+  setupMobileMenu();
+
   // Also set up theme toggles after a short delay to ensure they're loaded
   setTimeout(setupThemeToggles, 300);
+  
+  // Also set up mobile menu after a short delay to ensure elements are loaded
+  setTimeout(setupMobileMenu, 300);
 });
 
 // Setup event delegation for dynamically loaded theme toggles
@@ -208,10 +214,10 @@ auth.onAuthStateChanged((user) => {
     console.log("User not logged in");
     // Redirect to login page if not on login page
     if (
-      !window.location.href.includes("login.html") &&
-      !window.location.href.includes("register.html")
+      !window.location.href.includes("../auth/") &&
+      !window.location.href.includes("../auth/")
     ) {
-      window.location.href = "login.html";
+      window.location.href = "../auth/";
     }
   }
 });
@@ -293,6 +299,11 @@ const pageInfo = {
     subtitle: "AI-powered plant health analysis",
     mobileSubtitle: "Detect Diseases",
   },
+  "ai-chat": {
+    title: "AI Chat Support",
+    subtitle: "Get expert advice for your farming questions",
+    mobileSubtitle: "AI Assistant",
+  },
   "weather-advice": {
     title: "Weather Advice",
     subtitle: "Smart weather-based farming recommendations",
@@ -317,11 +328,6 @@ const pageInfo = {
     title: "Farm Records",
     subtitle: "Track expenses, sales, and activities",
     mobileSubtitle: "Farm Records",
-  },
-  "ai-chat": {
-    title: "AI Chat Support",
-    subtitle: "Get expert advice for your farming questions",
-    mobileSubtitle: "AI Assistant",
   },
 };
 
@@ -538,6 +544,90 @@ window.CropWise.getCurrentPageName = getCurrentPageName;
 // PAGE TITLE MANAGEMENT SECTION END
 // ===============================================
 
+
+
+
+// ===============================================
+// MOBILE MENU FUNCTIONALITY SECTION START
+// ===============================================
+
+// Mobile menu toggle functionality
+function setupMobileMenu() {
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  if (!mobileMenuBtn || !sidebar || !overlay) {
+    console.warn('Mobile menu elements not found');
+    return;
+  }
+  
+  // Toggle sidebar when mobile menu button is clicked
+  mobileMenuBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleMobileMenu();
+  });
+  
+  // Close sidebar when overlay is clicked
+  overlay.addEventListener('click', function() {
+    closeMobileMenu();
+  });
+  
+  // Close sidebar when escape key is pressed
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('translate-x-0')) {
+      closeMobileMenu();
+    }
+  });
+}
+
+// Toggle mobile menu
+function toggleMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  if (!sidebar || !overlay) return;
+  
+  if (sidebar.classList.contains('translate-x-0')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
+
+// Open mobile menu
+function openMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  if (!sidebar || !overlay) return;
+  
+  sidebar.classList.remove('-translate-x-full');
+  sidebar.classList.add('translate-x-0');
+  overlay.classList.remove('hidden');
+  
+  // Prevent body scroll when menu is open
+  document.body.style.overflow = 'hidden';
+}
+
+// Close mobile menu
+function closeMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  if (!sidebar || !overlay) return;
+  
+  sidebar.classList.remove('translate-x-0');
+  sidebar.classList.add('-translate-x-full');
+  overlay.classList.add('hidden');
+  
+  // Restore body scroll
+  document.body.style.overflow = '';
+}
+
+// ===============================================
+// MOBILE MENU FUNCTIONALITY SECTION END
+// ===============================================
 // Console message for developers
 console.log("🌱 CropWise Dashboard System Loaded");
 console.log("💾 User data is stored in Firebase Realtime Database");
