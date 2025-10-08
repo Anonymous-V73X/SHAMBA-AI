@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize any dashboard-specific charts or widgets
   initializeDashboardWidgets();
 
-  // Fetch real weather data
+  // Fetch real weather data for Nakuru, Rongai
   fetchWeatherData();
 
   // Set fixed market prices
@@ -188,47 +188,18 @@ function saveDashboardData(data) {
     });
 }
 
-// Function to fetch real weather data
+// Function to fetch real weather data for Nakuru, Rongai
 function fetchWeatherData() {
-  // Get user location from localStorage or ask for permission
-  let userLocation = localStorage.getItem("userLocation");
+  // Fixed location: Nakuru, Rongai
+  // Coordinates: -0.2833, 36.0667
+  const nakuruLat = -0.2833;
+  const nakuruLon = 36.0667;
 
-  if (userLocation) {
-    // Use cached location
-    const locationData = JSON.parse(userLocation);
-    getWeatherByCoordinates(locationData.lat, locationData.lon);
-    updateLocationDisplay(locationData.lat, locationData.lon);
-  } else {
-    // Get user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
+  // Update location display
+  updateLocationDisplay(nakuruLat, nakuruLon, "Nakuru, Rongai");
 
-          // Save location to localStorage for future use
-          localStorage.setItem(
-            "userLocation",
-            JSON.stringify({ lat: latitude, lon: longitude })
-          );
-
-          // Get weather data
-          getWeatherByCoordinates(latitude, longitude);
-          updateLocationDisplay(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          // Fallback to a default location (Nairobi, Kenya)
-          getWeatherByCoordinates(-1.2921, 36.8219);
-          updateLocationDisplay(-1.2921, 36.8219, "Nairobi, Kenya");
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser");
-      // Fallback to a default location (Nairobi, Kenya)
-      getWeatherByCoordinates(-1.2921, 36.8219);
-      updateLocationDisplay(-1.2921, 36.8219, "Nairobi, Kenya");
-    }
-  }
+  // Get weather data for Nakuru
+  getWeatherByCoordinates(nakuruLat, nakuruLon);
 }
 
 // Function to update location display in the UI
@@ -259,10 +230,8 @@ function getWeatherByCoordinates(lat, lon) {
     .then((data) => {
       updateWeatherWidget(data);
       saveWeatherDataToFirebase(data);
-      // Update location display with the city name from weather data
-      if (data.name) {
-        updateLocationDisplay(lat, lon, data.name);
-      }
+      // Don't update location display with the city name from weather data
+      // Keep showing "Nakuru, Rongai" regardless of API response
     })
     .catch((error) => {
       console.error("Error fetching weather data:", error);
@@ -372,7 +341,7 @@ function saveWeatherDataToFirebase(weatherData) {
     condition: weatherData.weather[0].main,
     humidity: weatherData.main.humidity,
     windSpeed: weatherData.wind.speed,
-    location: weatherData.name,
+    location: "Nakuru, Rongai", // Always save as Nakuru, Rongai
     timestamp: new Date().toISOString(),
   };
 

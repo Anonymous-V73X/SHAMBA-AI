@@ -3,7 +3,7 @@
 // ===============================================
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Load user's location and weather data
+  // Load weather data for Nakuru, Rongai
   loadWeatherData();
 
   // Load weather recommendations
@@ -11,41 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadWeatherData() {
-  // Get user location from localStorage or ask for permission
-  let userLocation = localStorage.getItem("userLocation");
-
-  if (userLocation) {
-    // Use cached location
-    const locationData = JSON.parse(userLocation);
-    getWeatherByCoordinates(locationData.lat, locationData.lon);
-  } else {
-    // Get user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-
-          // Save location to localStorage for future use
-          localStorage.setItem(
-            "userLocation",
-            JSON.stringify({ lat: latitude, lon: longitude })
-          );
-
-          // Get weather data
-          getWeatherByCoordinates(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          // Fallback to a default location (Nairobi, Kenya)
-          getWeatherByCoordinates(-1.2921, 36.8219);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser");
-      // Fallback to a default location (Nairobi, Kenya)
-      getWeatherByCoordinates(-1.2921, 36.8219);
-    }
-  }
+  // Fixed location: Nakuru, Rongai
+  // Coordinates: -0.2833, 36.0667
+  getWeatherByCoordinates(-0.2833, 36.0667);
 }
 
 // Function to get weather data by coordinates
@@ -95,7 +63,7 @@ function updateCurrentWeather(weatherData) {
 
   if (weatherData) {
     // Update with real weather data
-    const { main, weather, wind, name } = weatherData;
+    const { main, weather, wind } = weatherData;
     const temperature = main.temp;
     const condition = weather[0].main;
     const humidity = main.humidity;
@@ -113,9 +81,9 @@ function updateCurrentWeather(weatherData) {
     // Update wind speed
     if (windElement) windElement.textContent = `${windSpeed.toFixed(1)} km/h`;
 
-    // Update location
+    // Update location - Always show Nakuru, Rongai
     if (locationElement) {
-      locationElement.innerHTML = `<i class="fas fa-map-marker-alt mr-2"></i>${name}`;
+      locationElement.innerHTML = `<i class="fas fa-map-marker-alt mr-2"></i>Nakuru, Rongai`;
     }
 
     // Update weather icon
@@ -165,7 +133,7 @@ function updateCurrentWeather(weatherData) {
     if (humidityElement) humidityElement.textContent = "65%";
     if (windElement) windElement.textContent = "12 km/h";
     if (locationElement) {
-      locationElement.innerHTML = `<i class="fas fa-map-marker-alt mr-2"></i>Nairobi, Kenya`;
+      locationElement.innerHTML = `<i class="fas fa-map-marker-alt mr-2"></i>Nakuru, Rongai`;
     }
 
     const weatherIcon = document.querySelector(".fas.fa-sun.text-6xl");
@@ -314,6 +282,7 @@ function updateWeeklyForecast(forecastData) {
     });
   }
 }
+
 function generateCropRecommendations(forecastData) {
   if (!forecastData || !forecastData.list || !forecastData.city) {
     console.error("Invalid forecast data");
@@ -535,7 +504,7 @@ function saveWeatherData(weatherData) {
     condition: weatherData.weather[0].main,
     humidity: weatherData.main.humidity,
     windSpeed: weatherData.wind.speed,
-    location: weatherData.name,
+    location: "Nakuru, Rongai", // Always save as Nakuru, Rongai
     timestamp: new Date().toISOString(),
   };
 
