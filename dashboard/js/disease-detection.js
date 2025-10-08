@@ -40,7 +40,7 @@ function initializeAI() {
     window.addEventListener("google-ai-loaded", function () {
       try {
         genAI = new GoogleGenerativeAI(
-          "AIzaSyBTMh5503K4WXY_sgk1GFPqLGVBtMd0JhI"
+          "AIzaSyBR0U2VVIRUklo27jPeZhxGMTE7axxgRZE"
         );
         isAILoaded = true;
         console.log("Google Generative AI initialized successfully");
